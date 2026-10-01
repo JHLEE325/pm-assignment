@@ -1,0 +1,15 @@
+﻿person,role,part,leader,availability,employment
+pd_lee,planner,시스템기획팀,lead_kang,0.8,internal
+pd_park,planner,콘텐츠기획팀,lead_kang,0.8,internal
+pd_choi,planner,콘텐츠기획팀,lead_kang,1.0,internal
+pd_kim,planner,시스템기획팀,lead_kang,0.6,internal
+dev_jung,server,서버파트,lead_yoo,0.9,internal
+dev_oh,server,서버파트,lead_yoo,1.0,internal
+dev_nam,server,서버파트,lead_yoo,0.8,internal
+dev_han,client,클라파트,lead_yoo,0.9,internal
+dev_seo,client,클라파트,lead_yoo,0.7,internal
+dev_ryu,client,클라파트,lead_yoo,1.0,internal
+art_yoon,art,아트파트,lead_bae,1.0,internal
+art_shin,art,아트파트,lead_bae,0.9,internal
+art_outsource01,art,외주,lead_bae,,vendor
+art_outsource02,art,외주,lead_bae,,vendor

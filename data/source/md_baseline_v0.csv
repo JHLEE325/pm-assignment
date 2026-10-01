@@ -1,0 +1,7 @@
+﻿category_type,size,plan_md,dev_md,art_md,qa_md,art_lead_days,review_days
+SYSTEM,S,3,5,2,1,3,2
+SYSTEM,M,7,12,5,3,5,3
+SYSTEM,L,15,30,12,6,10,5
+CONTENT,S,2,3,4,1,5,2
+CONTENT,M,5,8,10,2,8,3
+CONTENT,L,10,18,25,4,15,5

@@ -1,0 +1,112 @@
+{
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 333,
+  "issues": [
+    {
+      "id": "48211",
+      "key": "HRG-1032",
+      "self": "https://horang.atlassian.net/rest/api/3/issue/48211",
+      "fields": {
+        "summary": "길드전 개편 - 서버",
+        "issuetype": { "id": "10002", "name": "Story", "subtask": false },
+        "status": {
+          "id": "10003", "name": "Done",
+          "statusCategory": { "key": "done", "name": "완료" }
+        },
+        "assignee": {
+          "accountId": "557058:9a1f-4c2b-dev-jung",
+          "displayName": "정OO",
+          "emailAddress": null,
+          "active": true
+        },
+        "reporter": { "accountId": "557058:3e7c-lead-yoo", "displayName": "유OO" },
+        "created": "2025-09-15T10:22:31.000+0900",
+        "updated": "2026-01-22T18:04:11.000+0900",
+        "resolutiondate": "2025-11-07T21:40:02.000+0900",
+        "duedate": "2025-11-05",
+        "timetracking": {
+          "originalEstimate": "30d",
+          "originalEstimateSeconds": 864000,
+          "timeSpent": "18d 2h",
+          "timeSpentSeconds": 525600
+        },
+        "aggregatetimespent": 612000,
+        "fixVersions": [
+          { "id": "10041", "name": "v1.8", "released": true, "releaseDate": "2025-09-15" },
+          { "id": "10042", "name": "v1.9", "released": true, "releaseDate": "2025-11-17" }
+        ],
+        "parent": {
+          "id": "48100", "key": "HRG-GLD",
+          "fields": { "summary": "길드전 개편", "issuetype": { "name": "Epic" } }
+        },
+        "customfield_10014": "HRG-GLD",
+        "customfield_10016": 21.0,
+        "customfield_10031": { "id": "10501", "value": "L" },
+        "customfield_10245": "시스템",
+        "customfield_10260": null,
+        "labels": ["server", "guild", "carry-over"],
+        "components": [{ "id": "10010", "name": "Server/Battle" }],
+        "worklog": {
+          "startAt": 0, "maxResults": 20, "total": 37,
+          "worklogs": [
+            { "id": "90211", "author": { "accountId": "557058:9a1f-4c2b-dev-jung" },
+              "started": "2025-09-22T00:30:00.000+0000", "timeSpentSeconds": 28800 },
+            { "id": "90212", "author": { "accountId": "557058:9a1f-4c2b-dev-jung" },
+              "started": "2025-09-23T01:00:00.000+0000", "timeSpentSeconds": 21600 }
+          ]
+        }
+      },
+      "changelog": {
+        "startAt": 0, "maxResults": 100, "total": 14,
+        "histories": [
+          { "id": "701", "created": "2025-09-22T09:14:00.000+0900",
+            "items": [{ "field": "status", "fieldId": "status",
+                        "fromString": "To Do", "toString": "In Progress" }] },
+          { "id": "702", "created": "2025-10-28T17:02:00.000+0900",
+            "items": [{ "field": "status", "fromString": "In Progress", "toString": "In Review" }] },
+          { "id": "703", "created": "2025-10-31T11:30:00.000+0900",
+            "items": [{ "field": "status", "fromString": "In Review", "toString": "Done" }] },
+          { "id": "704", "created": "2025-11-03T09:05:00.000+0900",
+            "items": [{ "field": "status", "fromString": "Done", "toString": "In Progress" },
+                      { "field": "resolution", "fromString": "Done", "toString": null }] },
+          { "id": "705", "created": "2025-11-07T21:40:00.000+0900",
+            "items": [{ "field": "status", "fromString": "In Progress", "toString": "Done" }] },
+          { "id": "706", "created": "2025-10-02T14:20:00.000+0900",
+            "items": [{ "field": "Fix Version", "fieldId": "fixVersions",
+                        "fromString": "v1.8", "toString": "v1.9" }] },
+          { "id": "707", "created": "2025-09-30T10:00:00.000+0900",
+            "items": [{ "field": "assignee", "fromString": "남OO", "toString": "정OO" }] }
+        ]
+      }
+    },
+    {
+      "id": "47003",
+      "key": "HRG-0914",
+      "fields": {
+        "summary": "랭킹 개편 - 서버",
+        "issuetype": { "name": "Story" },
+        "status": { "name": "완료", "statusCategory": { "key": "done" } },
+        "assignee": null,
+        "created": "2025-01-08T09:00:00.000+0900",
+        "updated": "2025-02-04T11:00:00.000+0900",
+        "resolutiondate": null,
+        "timetracking": {},
+        "fixVersions": [{ "id": "10035", "name": "v1.5", "released": true }],
+        "customfield_10014": null,
+        "customfield_10016": null,
+        "customfield_10032": "L",
+        "customfield_10245": "SYSTEM",
+        "worklog": { "startAt": 0, "maxResults": 20, "total": 0, "worklogs": [] }
+      },
+      "changelog": {
+        "startAt": 0, "maxResults": 100, "total": 2,
+        "histories": [
+          { "id": "410", "created": "2025-01-10T09:30:00.000+0900",
+            "items": [{ "field": "status", "fromString": "To Do", "toString": "진행 중" }] }
+        ]
+      }
+    }
+  ],
+  "_meta_note": "필드 메타데이터는 별도 엔드포인트(/rest/api/3/field)에서 조회해야 합니다. 본 샘플에는 포함되지 않았습니다."
+}

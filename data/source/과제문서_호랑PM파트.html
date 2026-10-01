@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>호랑 PM파트 사전 과제</title>
+<style>
+ body{font-family:system-ui,-apple-system,'Malgun Gothic',sans-serif;max-width:900px;
+      margin:0 auto;padding:40px 24px;line-height:1.75;color:#24292f}
+ h1{font-size:26px;border-bottom:3px solid #0969da;padding-bottom:12px}
+ h2{font-size:20px;margin-top:44px;background:#f6f8fa;padding:10px 14px;
+    border-left:4px solid #0969da}
+ h3{font-size:16px;margin-top:28px;color:#0550ae}
+ table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}
+ th,td{border:1px solid #d0d7de;padding:8px 10px;text-align:left}
+ th{background:#f6f8fa}
+ code{background:#f6f8fa;padding:2px 5px;border-radius:3px;font-size:13px}
+ .box{background:#ddf4ff;border:1px solid #54aeff;padding:14px 18px;
+      border-radius:6px;margin:18px 0}
+ .warn{background:#fff8c5;border:1px solid #d4a72c;padding:14px 18px;
+       border-radius:6px;margin:18px 0}
+ .flow{background:#f6f8fa;border:1px solid #d0d7de;padding:16px;
+       border-radius:6px;font-size:14px;line-height:2.1}
+ ul,ol{padding-left:24px} li{margin:7px 0}
+ @media print{body{padding:0}h2{break-after:avoid}}
+</style></head><body>
+
+<h1>호랑 PM파트 사전 과제<br><span style="font-size:17px;font-weight:400;color:#57606a">
+업데이트 일정 역산 자동화 시스템 설계</span></h1>
+
+
+<div style="border:2px solid #444; background:#f7f7f7; padding:18px 20px; margin:24px 0; line-height:1.7;">
+<b>[안내] 본 과제의 상황 설정은 가상입니다</b>
+<p style="margin:10px 0 0;">
+이 문서에 등장하는 업데이트 일정, 조직 구성, 담당자, 일정 압축 및 지연 사례,
+그리고 함께 제공되는 모든 데이터 파일(jira_issues.csv, jira_worklog.csv,
+md_baseline_v0.csv, calendar.csv, people.csv, jira_api_raw_sample.json)은
+과제 수행을 위해 <b>임의로 만들어낸 가상의 설정이자 프로그램으로 생성한 합성 데이터</b>입니다.
+</p>
+<p style="margin:10px 0 0;">
+실제 호랑 PM파트의 업무 상황이나 특정 프로젝트의 일정·성과·인력 운영 현황을
+반영하거나 묘사한 것이 아니며, 실제 지라 인스턴스에서 추출한 데이터도 아닙니다.
+데이터에 포함된 이름과 계정은 모두 가공된 것입니다.
+</p>
+<p style="margin:10px 0 0;">
+일정이 빠듯하게 설정되어 있거나 데이터가 정돈되어 있지 않은 부분은
+과제의 난이도와 판단 지점을 만들기 위해 <b>의도적으로 구성한 조건</b>이므로,
+그 자체를 회사의 현재 상태로 해석하지 않으셔도 됩니다.
+</p>
+</div>
+<h2>0. 안내사항</h2>
+<p>구현을 끝까지 마치지 못해도 괜찮습니다. 대신 <b>왜 그렇게 판단하고 설계했는지</b>를
+함께 적어주세요.</p>
+<p><b>AI 도구 사용을 권장합니다.</b> 실제 업무에서도 AI를 적극 활용하는 조직이기 때문입니다.
+AI로 초안을 만드셔도 좋습니다. 다만 <b>모든 주장에는 이슈 번호, 필드 위치, 수치 같은 데이터 근거</b>를
+붙여주시고, 산출물 D-4에 사용 기록을 남겨주세요.</p>
+<ul>
+<li>목표 투입 시간: <b>20~24시간</b></li>
+<li>제출 기한: 배포일로부터 <b>7일</b></li>
+<li>제출 방법: 아래 제출 형식에 맞춘 압축 파일 1개를 회신</li>
+<li>제출물의 저작권은 지원자 본인에게 있으며, 당사는 채용 검토 목적으로만 열람하고
+전형 종료 후 파기합니다.</li>
+</ul>
+<h3>제출 형식</h3>
+<ul>
+<li>산출물 전체를 <b>하나의 git 저장소</b>로 구성해주세요. 저장소 안의 폴더 구성은 자유입니다.</li>
+<li>저장소 루트에 <code>README.md</code>를 두고, 폴더 구성과 결과를 다시 만들어내는 방법(적재·실행 순서)을 적어주세요.</li>
+<li>회신할 때는 <b><code>.git</code> 폴더를 포함한 저장소 폴더 전체</b>를 그대로 압축해주세요.</li>
+<li>문서 산출물은 Markdown, PDF, HTML 중 편한 형식으로 작성하시면 됩니다. 제공 데이터 파일은 저장소에 포함하셔도 됩니다.</li>
+</ul>
+<div class="warn"><b>이 과제의 기준일(오늘)은 2026년 1월 26일입니다.</b><br>
+모든 "지금 시점" 판단은 이 날짜를 기준으로 해주세요.</div>
+<p>문서 마지막에 <b>용어 안내표</b>가 있습니다. 낯선 표현이 나오면 참고해주세요.</p>
+
+<h2>1. 배경</h2>
+<p>호랑 PM파트는 업데이트 버전마다 기획 착수가 늦어져 개발 일정이 압축되는 문제를
+겪고 있습니다.</p>
+<p>원인을 추적해 보니, 프로젝트 초기에 수기로 만든 <b>MD 기준표</b>(<code>md_baseline_v0.csv</code>)가
+한 번도 갱신되지 않은 채 2년째 쓰이고 있었습니다. 실제로 얼마나 일했는지는 Jira에 계속
+쌓이고 있지만, <b>그 실적이 기준표로 되돌아오는 경로가 없습니다.</b></p>
+<p>그래서 다음과 같은 <b>순환 구조</b>를 만들려 합니다.</p>
+<div class="flow">
+버전 종료 &rarr; 실제 투입 MD 자동 측정 &rarr; 기준표 갱신<br>
+&rarr; 갱신된 기준표로 다음 버전의 기획 착수일 역산<br>
+&rarr; 담당 기획자·파트 리더에게 통지 &rarr; (다음 버전 종료 시 반복)
+</div>
+<p>첨부된 데이터와 HTML 목업은 <b>이 구조를 만들려다 중단된 상태</b>입니다.
+이어서 설계해주시면 됩니다.</p>
+<p>콘텐츠는 <b>시스템 / 콘텐츠</b> 2개 카테고리와 <b>S / M / L</b> 3개 규모로
+구분한다고 가정합니다.</p>
+
+<h2>2. 제공 자료</h2>
+<table><tr><th>파일명</th><th>내용</th></tr>
+<tr><td><code>jira_issues.csv</code></td><td>이슈 목록 333건 (v1.3 ~ v2.1)</td></tr>
+<tr><td><code>jira_worklog.csv</code></td><td>작업 시간 기록 1,311건</td></tr>
+<tr><td><code>md_baseline_v0.csv</code></td><td>초기에 수기로 만든 MD 기준표 (검증된 적 없음)</td></tr>
+<tr><td><code>calendar.csv</code></td><td>공휴일 및 담당자 연차</td></tr>
+<tr><td><code>people.csv</code></td><td>담당자 정보 (직군, 파트, 리더, 가용률)</td></tr>
+<tr><td><code>jira_api_raw_sample.json</code></td>
+    <td><b>Jira에서 데이터를 꺼냈을 때 실제로 받는 원본 형태</b> 샘플</td></tr>
+<tr><td><code>dashboard_mockup.html</code></td><td>중단된 상황판 프로토타입</td></tr></table>
+<p>CSV 파일들은 이미 보기 좋게 정리된 상태이고, JSON 파일은 <b>정리되기 전의 원본</b>입니다.
+두 형태를 비교해 보시면 도움이 됩니다.</p>
+
+<h3>CSV 컬럼 안내</h3>
+<table><tr><th>파일</th><th>컬럼</th><th>뜻</th></tr>
+<tr><td rowspan="16"><code>jira_issues.csv</code></td><td><code>issue_key</code></td><td>이슈 번호</td></tr>
+<tr><td><code>type</code></td><td>이슈 유형 (Story, Task, Bug)</td></tr>
+<tr><td><code>summary</code></td><td>이슈 제목</td></tr>
+<tr><td><code>fix_version</code></td><td>배포 대상 버전</td></tr>
+<tr><td><code>epic_link</code></td><td>상위 에픽 키</td></tr>
+<tr><td><code>category_type</code></td><td>콘텐츠 카테고리 (SYSTEM / CONTENT)</td></tr>
+<tr><td><code>size_label</code></td><td>기획자가 붙인 규모 (S / M / L)</td></tr>
+<tr><td><code>assignee</code></td><td>담당자 계정</td></tr>
+<tr><td><code>account_type</code></td><td>계정 구분 (사내 / 외주)</td></tr>
+<tr><td><code>status</code></td><td>현재 상태</td></tr>
+<tr><td><code>created</code></td><td>이슈 생성일</td></tr>
+<tr><td><code>started</code></td><td>작업 시작일 (정리 과정에서 채워 넣은 값)</td></tr>
+<tr><td><code>resolved</code></td><td>완료 처리일</td></tr>
+<tr><td><code>orig_estimate</code></td><td>최초 추정 공수</td></tr>
+<tr><td><code>story_points</code></td><td>스토리 포인트</td></tr>
+<tr><td><code>reopen_cnt</code></td><td>완료 후 다시 열린 횟수</td></tr>
+<tr><td rowspan="5"><code>jira_worklog.csv</code></td><td><code>issue_key</code></td><td>이슈 번호</td></tr>
+<tr><td><code>author</code></td><td>기록한 사람</td></tr>
+<tr><td><code>date</code></td><td>작업한 날짜</td></tr>
+<tr><td><code>time_spent</code></td><td>작업한 양</td></tr>
+<tr><td><code>unit</code></td><td><code>time_spent</code>의 단위</td></tr>
+<tr><td rowspan="3"><code>md_baseline_v0.csv</code></td><td><code>plan_md</code> · <code>dev_md</code> · <code>art_md</code> · <code>qa_md</code></td><td>카테고리 &times; 규모별 기획 · 개발 · 아트 · QA 기준 MD</td></tr>
+<tr><td><code>art_lead_days</code></td><td>개발 착수 전에 리소스(아트)가 먼저 나와야 하는 일수</td></tr>
+<tr><td><code>review_days</code></td><td>기획 완료 후 검수에 필요한 일수</td></tr>
+<tr><td rowspan="2"><code>calendar.csv</code></td><td><code>type</code></td><td>holiday(공휴일) 또는 pto(연차)</td></tr>
+<tr><td><code>target</code></td><td>적용 대상 (ALL 또는 담당자 계정)</td></tr>
+<tr><td rowspan="3"><code>people.csv</code></td><td><code>role</code> · <code>part</code> · <code>leader</code></td><td>직군, 소속 파트, 파트 리더</td></tr>
+<tr><td><code>availability</code></td><td>업무 가용률 (1.0이면 해당 업무에 전일 투입)</td></tr>
+<tr><td><code>employment</code></td><td>고용 구분 (사내 / 외주)</td></tr>
+</table>
+
+<h3>버전별 일정</h3>
+<table><tr><th>버전</th><th>계획 배포일</th><th>실제 배포일</th><th>Jira에서 버전을 닫은 날</th></tr>
+<tr><td>v1.3</td><td>2024-09-05</td><td>2024-09-11</td><td>2024-09-19</td></tr>
+<tr><td>v1.4</td><td>2024-11-07</td><td>2024-11-07</td><td>2024-11-15</td></tr>
+<tr><td>v1.5</td><td>2025-01-16</td><td>2025-01-31</td><td>2025-02-04</td></tr>
+<tr><td>v1.6</td><td>2025-03-13</td><td>2025-03-18</td><td>2025-03-18</td></tr>
+<tr><td>v1.7</td><td>2025-05-15</td><td>2025-05-23</td><td>2025-05-30</td></tr>
+<tr><td>v1.8</td><td>2025-09-04</td><td>2025-09-15</td><td>2025-10-10</td></tr>
+<tr><td>v1.9</td><td>2025-11-06</td><td>2025-11-17</td><td>2025-11-17</td></tr>
+<tr><td>v2.0</td><td>2026-01-08</td><td>2026-01-19</td><td>2026-02-06</td></tr>
+<tr><td>v2.1</td><td>2026-03-12</td><td>진행 중</td><td>&ndash;</td></tr></table>
+
+<h2>3. 산출물 A &mdash; 데이터 진단과 기준 정하기</h2>
+<p><b>분량: 5페이지 이내</b></p>
+
+<h3>A-1. 데이터를 그냥 더하면 틀리는 지점 찾기</h3>
+<p>첨부된 데이터로 "이 버전에 MD가 총 몇 들었나"를 계산할 때, <b>단순히 숫자를 합치면
+잘못된 값이 나오는 지점들</b>이 있습니다. 찾아내서 <b>어떤 이슈 번호가 그 예시인지</b>와
+함께 제시해주세요.</p>
+<p>항목마다 다음 네 가지를 써주세요.</p>
+<ol><li>무엇을 발견했는지</li><li>왜 그게 문제인지</li><li>어떻게 처리할 생각인지</li>
+<li>그렇게 처리하면 대신 생기는 부작용은 무엇인지</li></ol>
+
+<h3>A-2. 정의가 없는 항목을 직접 정하기</h3>
+<p>아래 항목들은 데이터에 정의가 없습니다. <b>직접 정하고 그 근거를 써주세요.</b>
+정답은 없습니다. 정의끼리 서로 모순되지 않게 정해주세요.</p>
+<ul>
+<li><b>1 MD란 무엇인가.</b> 사람 한 명이 하루 일한 것인지, 여러 사람이 동시에 한 이슈를
+맡았을 때는 어떻게 나눌 것인지.</li>
+<li><b>이슈를 어느 공정(기획 / 개발 / 아트 / QA)에 귀속시킬 것인가.</b> 데이터에는 공정을
+나타내는 칸이 없습니다. 귀속 규칙을 정하고, 규칙에 들어맞지 않는 이슈는 어떻게 처리할지 써주세요.</li>
+<li><b>QA MD는 측정할 수 있는가.</b> 기준표에는 QA MD 칸이 있습니다. 제공 데이터로 이 값을
+측정할 수 있는지 확인하고, 불가능하다면 무엇으로 대체할지 정해주세요.</li>
+<li><b>리소스 MD는 어디까지 포함하는가.</b> 외주 아트 작업이 계정 하나로만 기록되어
+있는데, 이걸 어떻게 쪼갤 것인지.</li>
+<li><b>"버전이 종료됐다"는 시점은 언제인가.</b> 계획 배포일, 실제 배포일, Jira에서 버전을
+닫은 날 중 무엇을 쓸 것이며 왜 그런지.</li>
+<li><b>S / M / L을 사람 감각이 아니라 눈으로 확인할 수 있는 기준으로 다시 정의하기.</b>
+지금은 기획자가 주관적으로 붙이고 있습니다.</li>
+<li><b>"안정적인 기획 일정"이란 무엇인가.</b> 개발 착수 며칠 전에 기획이 끝나야 하는지,
+검수에 며칠이 필요한지, 여유(버퍼)를 몇 % 둘 것인지를 <b>숫자로</b> 정해주세요.</li>
+<li><b>어느 수준을 넘으면 TF를 제안할 것인가.</b> 그 숫자가 왜 그 숫자인지도 함께.</li>
+</ul>
+
+<h3>A-3. 기록이 빠진 데이터 다루기</h3>
+<p>작업 시간 기록(worklog)이 꽤 많이 비어 있습니다. <b>실제 결측 비율을 직접 계산</b>하고,
+남은 기록으로 전체를 추정할지 아니면 다른 대체 지표를 쓸지 선택해주세요. 그리고
+<b>그 선택이 틀렸을 경우 무엇이 망가지는지</b> 써주세요.</p>
+
+<h3>A-4. 시간에 따른 변화 읽기</h3>
+<p>v1.3부터 v2.0까지를 시간 순으로 놓고 봤을 때 <b>눈에 띄는 추세나 변화</b>가 있다면
+기술하고, 그것이 기준표 운영 방식에 어떤 영향을 주는지 써주세요.</p>
+
+<h2>4. 산출물 B &mdash; Jira 데이터를 DB로 가져오는 방법 설계</h2>
+<p><b>분량: 8페이지 이내</b> (DDL, 쿼리, README는 분량에서 제외)</p>
+
+<h3>B-1. 원본을 열어보고 문제 찾기</h3>
+<p><code>jira_api_raw_sample.json</code>을 열어보세요. 이 데이터를 <b>아무 가공 없이 그대로
+DB에 넣으면</b>, A-2에서 정한 MD를 계산할 수 없습니다. 어디가 걸림돌인지 찾아서
+"무엇이 문제인지"와 "그래서 어떻게 손봐야 하는지"를 써주세요. Jira에 추가로 요청해야 할
+정보가 있다면 그것도 적어주세요.</p>
+
+<h3>B-2. 어느 값을 어느 칸에 넣을지 정리표 만들기</h3>
+<p>원본 데이터의 어느 항목이 DB의 어느 칸으로 들어가는지 표로 정리해주세요.
+최소 10개 항목을 다뤄주시고, 항목마다 원본에서의 위치, DB 칸 이름, 데이터 종류,
+넣기 전에 바꿔야 할 것, 값이 비었을 때의 처리, 나중에 Jira 쪽이 바뀌면 받는 영향을
+채워주세요.</p>
+<div class="box">원본에는 <code>customfield_10016</code>처럼 <b>이름만 봐서는 무슨 값인지
+알 수 없는 항목</b>이 있습니다. 이걸 코드에 그대로 적어두면 Jira에서 항목 번호가 바뀌는
+순간 시스템이 멈춥니다. 이를 피하는 방법도 제안해주세요.</div>
+
+<h3>B-3. "언제부터 언제까지 일했는지" 알아내기</h3>
+<p>MD를 계산하려면 각 작업이 <b>실제로 언제 시작되고 끝났는지</b>를 알아야 합니다. 그런데
+Jira에는 "작업 시작일"이라는 항목이 따로 없고, 대신 <b>상태가 바뀐 기록</b>(할일 &rarr;
+진행중 &rarr; 완료)만 남아 있습니다.</p>
+<p>이 상태 변경 기록을 DB에 어떤 모양으로 저장할지 설계하고, 거기서 실제 작업 기간을
+뽑아내는 규칙을 써주세요. 특히 "검토 대기"나 "보류" 상태로 멈춰 있던 기간을 작업 시간에
+포함할지 뺄지 정하고 이유를 밝혀주세요.</p>
+
+<h3>B-4. 데이터를 얼마나 자주, 어떻게 가져올지</h3>
+<p>다음을 정하고 근거를 써주세요.</p>
+<ul>
+<li>매번 전체를 다시 가져올지, <b>바뀐 것만 골라 가져올지</b>(증분 동기화)</li>
+<li>바뀐 것만 가져온다면 "어디까지 가져왔는지"를 무엇으로 기억할지, 그 방법의 한계는 무엇인지</li>
+<li>몇 시간(또는 며칠) 간격으로 돌릴지</li>
+<li><b>같은 데이터가 실수로 두 번 들어와도 결과가 망가지지 않게</b> 만드는 방법</li>
+<li>Jira가 "요청이 너무 많다"며 거부할 때 어떻게 다시 시도할지</li>
+<li><b>이미 배포가 끝난 버전의 이슈를 누군가 나중에 수정했을 때</b>, 확정해 둔 MD를
+그대로 둘지 다시 계산할지</li>
+</ul>
+
+<h3>B-5. 데이터를 몇 단계로 나눠 보관할지</h3>
+<p>Jira에서 받은 원본을 <b>파일 형태로 그대로 남길지</b> 정하고, 남긴다면 왜 남기는지,
+어떤 형식과 폴더 구조로 쌓을지, 그리고 <b>나중에 계산 규칙이 바뀌어서 과거 데이터를 전부
+다시 계산해야 할 때</b> 어떤 순서로 복구할지 써주세요. 원본을 안 남기는 선택도 괜찮지만
+그때 생기는 위험을 밝혀주세요.</p>
+
+<h3>B-6. DB 테이블 설계</h3>
+<p>받은 그대로 쌓는 단계, 다듬는 단계, 합쳐서 요약하는 단계로 나누어 테이블을 설계하고
+생성 구문(DDL)을 작성해주세요. 저장 방식·정렬 기준·데이터를 나눠 담는 기준을 각각
+왜 그렇게 정했는지 한 줄씩 붙여주세요.</p>
+<div class="box"><b>이 정도 데이터 양(연간 2천 건 수준)에 ClickHouse는 과한 선택이다</b>라고
+판단하셔도 됩니다. 그렇다면 대안을 제시하고 비교해주세요.</div>
+
+<h3>B-7. 핵심 조회 쿼리 2개</h3>
+<p>① 버전별로 카테고리 &times; 규모별 실제 MD를 뽑는 쿼리, ② 특정 기간에 한 담당자가
+동시에 몇 건을 맡고 있었는지 뽑는 쿼리. <b>제공된 CSV를 B-6에서 설계한 테이블에 실제로
+적재한 뒤</b> 쿼리를 실행하고, 결과 예시를 함께 제출해주세요.</p>
+<div class="box">DB 종류는 자유이며 SQLite처럼 가벼운 것도 괜찮습니다. 설치·적재·실행 과정과 함께,
+<b>적재하면서 손봐야 했던 데이터와 그 처리 방법</b>을 README에 남겨주세요.</div>
+
+<h3>B-8. 측정한 MD를 기준표로 되돌리는 규칙</h3>
+<p>측정된 실적이 기준표로 돌아가는 규칙을 설계하고, 최소한 다음에 답해주세요.</p>
+<ul>
+<li>기존 값을 <b>덮어쓸 것인가</b>, 버전별로 <b>쌓아둘 것인가</b></li>
+<li><b>유난히 이상했던 버전 한 건이 기준을 망가뜨리는 것</b>을 어떻게 막을 것인가.
+(최근 몇 개의 평균을 쓸 것인지, 이상한 값을 걸러낼 것인지, 무엇을 "이상하다"고 볼 것인지)</li>
+<li><b>자동으로 반영할 것인가, 사람이 승인해야 반영할 것인가.</b> 승인자는 누구이고,
+무엇을 보고 판단하는가</li>
+<li>기준표가 바뀌면 <b>이미 통지해 둔 일정</b>은 어떻게 처리할 것인가</li>
+</ul>
+
+<h3>B-9. Jira 쪽이 바뀌었을 때 대응</h3>
+<p>운영하다 보면 Jira에 입력 항목이 생기거나 없어지거나 이름이 바뀌고, 업무 흐름의
+상태 이름도 바뀝니다. 이때 <b>시스템이 조용히 잘못된 값을 만들어내지 않도록</b>
+무엇을 어떻게 감지하고, 감지한 다음 어떤 순서로 처리할지 써주세요.</p>
+<div class="box">"조용히 잘못된다"가 핵심입니다. 눈에 보이는 오류는 금방 고치지만,
+<b>그럴듯하게 틀린 숫자</b>는 몇 달 뒤에 발견됩니다.</div>
+
+<h3>B-10. 값이 맞는지 계속 확인하는 장치</h3>
+<p>DB에 들어간 값이 Jira 화면의 값과 실제로 일치하는지 <b>상시 확인하는 방법</b>을
+3개 이상 제시해주세요. 무엇을 비교할지, 얼마나 자주 할지, 몇 %까지 차이를 허용할지,
+차이가 났을 때 무엇을 할지를 포함해주세요.</p>
+
+<h2>5. 산출물 C &mdash; 기획 착수일 역산 상황판 (HTML 1개)</h2>
+<p><b>분량: HTML 1개 + 설명 문서 2페이지 이내</b></p>
+<p><code>dashboard_mockup.html</code>을 수정하거나 새로 작성해주세요. <b>데이터는 임의의 값으로
+대체 가능하며, 실제 DB 연결은 요구하지 않습니다.</b> 목업에는 의도적으로 잘못된 부분이
+8곳 있고 주석으로 표시되어 있습니다.</p>
+
+<h3>C-1. 기획 착수일 역산</h3>
+<p>업데이트일, 콘텐츠, 담당 기획자를 지정하면 <b>언제 기획을 시작해야 하는지</b>를 거꾸로
+계산해 보여주세요. 기획 &rarr; 검수 &rarr; 리소스 선행 &rarr; 개발 &rarr; QA/코드프리즈
+흐름이 모두 보여야 하고, <b>주말·공휴일·연차·담당자 가용률·동시에 맡고 있는 건수</b>가
+반영되어야 합니다.</p>
+
+<h3>C-2. 일정이 넘칠 때 대안 제시</h3>
+<p>"지연"이라고만 표시하고 끝내지 말고, <b>실제로 선택할 수 있는 대안을 2개 이상 숫자
+근거와 함께</b> 제시해주세요. 예를 들어 TF를 꾸릴 때 몇 명이 며칠 필요한지, 규모를 L에서
+M으로 줄이면 며칠이 확보되는지, 업데이트를 미룬다면 최소 며칠이 필요한지 같은 것들입니다.</p>
+
+<h3>C-3. 화면이 필요한 데이터 형태 정의하기</h3>
+<p>함께 제공되는 <code>/api/md_summary</code> 규격은 <b>화면이 필요한 값을 주지 못합니다.</b>
+화면이 요구하는 데이터의 모양을 직접 정의해 JSON 형태로 제출해주세요. 그리고 각 값이
+<b>B-6에서 설계한 테이블 중 어디서 오는지</b>, <b>어느 단계에서 계산되는지</b>(DB 쿼리 /
+서버 배치 작업 / 화면 스크립트 / 조건에 따른 기계적 판단 / AI 호출)를 표로 연결하고,
+왜 그렇게 나눴는지 써주세요.</p>
+
+<h2>6. 산출물 D &mdash; 운영 설계</h2>
+<p><b>분량: 3페이지 이내</b></p>
+
+<h3>D-1. Slack 알림 문안</h3>
+<p>파트 리더용과 담당 기획자용으로 각 1건씩 작성해주세요. <b>받는 사람이 다음에 무엇을
+해야 할지 바로 알 수 있는</b> 형태여야 합니다.</p>
+
+<h3>D-2. AI를 어디에 쓰고 어디에 쓰지 않을지</h3>
+<p>알림을 만드는 과정에서 <b>조건에 따라 기계적으로 처리할 부분과 AI에게 맡길 부분을
+나누고</b> 이유를 써주세요. 월 사용량과 비용을 추정하되 어떤 가정으로 계산했는지 밝히고,
+<b>비용을 절반으로 줄여야 한다면 무엇을 먼저 기계적 처리로 내릴지</b> 써주세요.</p>
+
+<h3>D-3. (선택) 과거 데이터로 검증하기</h3>
+<p>v1.3 ~ v1.9 데이터로 MD 모델을 만들고, <b>v2.0으로 얼마나 맞는지 검증</b>해주세요.
+카테고리별 오차율과, 가장 크게 빗나간 사례 1건의 원인 분석을 제출해주세요.</p>
+
+<h3>D-4. AI 사용 기록</h3>
+<p>사용한 도구와 주요 질문을 요약하고, <b>AI가 틀린 지점 3가지와 그것을 어떻게 발견하고
+고쳤는지</b> 써주세요. AI를 쓰지 않으셨다면 그 이유를 써주세요.</p>
+
+
+<h2>7. 용어 안내</h2>
+<table><tr><th>표현</th><th>뜻</th></tr>
+<tr><td>MD</td><td>사람 한 명이 하루 일하는 분량 (Man-Day)</td></tr>
+<tr><td>역산</td><td>완료일을 기준으로 거꾸로 계산해 시작일을 구하는 것</td></tr>
+<tr><td>적재</td><td>외부 데이터를 우리 DB에 가져와 넣는 것</td></tr>
+<tr><td>원본 페이로드</td><td>Jira가 돌려준, 가공하지 않은 데이터 덩어리</td></tr>
+<tr><td>커스텀 필드</td><td>Jira 기본 제공이 아니라 회사가 직접 추가한 입력 항목</td></tr>
+<tr><td>changelog (변경 이력)</td><td>상태·담당자 등이 언제 무엇에서 무엇으로 바뀌었는지의 기록</td></tr>
+<tr><td>증분 동기화</td><td>전체를 다시 가져오지 않고 바뀐 것만 가져오는 방식</td></tr>
+<tr><td>멱등성</td><td>같은 작업을 여러 번 해도 결과가 한 번 한 것과 같은 성질</td></tr>
+<tr><td>워터마크</td><td>"어디까지 가져왔다"는 기준점</td></tr>
+<tr><td>백필</td><td>규칙이 바뀌었을 때 과거 데이터를 다시 처리하는 작업</td></tr>
+<tr><td>오브젝트 스토리지</td><td>파일을 그대로 쌓아두는 저장소 (S3, GCS 등)</td></tr>
+<tr><td>정합성</td><td>두 곳의 데이터가 서로 어긋나지 않고 맞는 상태</td></tr>
+<tr><td>DDL</td><td>DB에 테이블을 만드는 명령문</td></tr>
+<tr><td>되먹임 (피드백 루프)</td><td>결과값이 다시 처음 기준으로 되돌아가 반영되는 구조</td></tr>
+<tr><td>코드프리즈</td><td>배포 전 코드 수정을 중단하고 검증만 하는 기간</td></tr>
+<tr><td>토큰</td><td>AI가 글자를 처리하는 단위이자 비용 기준</td></tr>
+<tr><td>TF</td><td>특정 목표를 위해 한시적으로 꾸리는 전담 조직</td></tr></table>
+
+<p style="margin-top:40px;padding-top:20px;border-top:1px solid #d0d7de;color:#57606a">
+문의사항은 채용 담당자에게 회신해주세요. 감사합니다.</p>
+</body></html>

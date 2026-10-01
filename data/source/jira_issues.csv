@@ -1,0 +1,334 @@
+﻿issue_key,type,summary,fix_version,epic_link,category_type,size_label,assignee,account_type,status,created,started,resolved,orig_estimate,story_points,reopen_cnt
+HRG-1012,Story,신규 각성 시스템 - 기획,v1.8,EPIC-AWK,SYSTEM,L,pd_lee,internal,Done,2025-07-01,2025-07-02,2025-07-24,120h,13,0
+HRG-1013,Story,신규 각성 시스템 - 서버,v1.8,EPIC-AWK,SYSTEM,L,dev_jung,internal,Done,2025-07-20,2025-07-25,2025-08-29,200h,21,1
+HRG-1014,Story,신규 각성 시스템 - 클라,v1.8,EPIC-AWK,SYSTEM,L,dev_han,internal,Done,2025-07-20,2025-07-25,2025-09-02,180h,21,0
+HRG-1015,Task,각성 이펙트 리소스,v1.8,EPIC-AWK,SYSTEM,L,art_outsource01,vendor,Done,2025-07-10,2025-07-15,2025-08-20,,,0
+HRG-1016,Bug,각성 시스템 QA 반려 1차,v1.8,EPIC-AWK,SYSTEM,S,dev_jung,internal,Done,2025-09-03,2025-09-03,2025-09-05,,,0
+HRG-1017,Bug,각성 시스템 QA 반려 2차,v1.8,EPIC-AWK,SYSTEM,S,dev_jung,internal,Done,2025-09-06,2025-09-06,2025-09-09,,,0
+HRG-1021,Story,추석 이벤트 던전 - 기획,v1.8,EPIC-EV08,CONTENT,M,pd_park,internal,Done,2025-07-14,2025-07-14,2025-07-25,40h,8,0
+HRG-1022,Story,추석 이벤트 던전 - 개발,v1.8,EPIC-EV08,CONTENT,M,dev_seo,internal,Done,2025-07-28,2025-07-28,2025-08-22,64h,8,0
+HRG-1023,Task,추석 던전 배경/몹 리소스,v1.8,EPIC-EV08,CONTENT,M,art_outsource01,vendor,Done,2025-07-16,2025-07-20,2025-08-18,,,0
+HRG-1024,Story,코스튬 3종 추가,v1.8,,CONTENT,S,art_yoon,internal,Done,2025-08-01,2025-08-05,2025-08-14,24h,3,0
+HRG-1031,Story,길드전 개편 - 기획,"v1.8,v1.9",EPIC-GLD,SYSTEM,L,pd_lee,internal,Done,2025-08-04,2025-08-06,2025-10-02,160h,13,2
+HRG-1032,Story,길드전 개편 - 서버,v1.9,EPIC-GLD,SYSTEM,L,dev_jung,internal,Done,2025-09-15,2025-09-22,2025-11-07,240h,21,0
+HRG-1033,Story,길드전 매칭 로직,v1.9,EPIC-GLD,SYSTEM,M,dev_jung,internal,Done,2025-09-15,2025-09-22,2025-10-31,80h,8,0
+HRG-1034,Story,길드전 UI,v1.9,EPIC-GLD,SYSTEM,M,dev_han,internal,Done,2025-09-20,2025-09-22,2025-11-04,96h,8,0
+HRG-1035,Task,길드전 UI 리소스,v1.9,EPIC-GLD,SYSTEM,M,art_outsource01,vendor,Done,2025-09-01,2025-09-08,2025-10-24,,,0
+HRG-1041,Story,할로윈 이벤트 - 기획,v1.9,EPIC-EV09,CONTENT,M,pd_choi,internal,Done,2025-09-01,2025-09-01,2025-09-12,40h,5,0
+HRG-1042,Story,할로윈 이벤트 - 개발,v1.9,EPIC-EV09,CONTENT,M,dev_seo,internal,Done,2025-09-15,2025-09-15,2025-10-10,64h,8,0
+HRG-1043,Task,할로윈 리소스 일괄,v1.9,EPIC-EV09,CONTENT,M,art_outsource01,vendor,Done,2025-08-25,2025-09-01,2025-10-06,,,0
+HRG-1044,Story,신규 펫 시스템 - 기획,v1.9,EPIC-PET,SYSTEM,M,pd_park,internal,Done,2025-08-18,2025-08-18,2025-09-05,56h,8,0
+HRG-1045,Story,신규 펫 시스템 - 개발,v1.9,EPIC-PET,SYSTEM,M,dev_oh,internal,Done,2025-09-08,2025-09-08,2025-10-24,96h,13,1
+HRG-1046,Story,펫 밸런스 재작업,v1.9,EPIC-PET,SYSTEM,S,pd_park,internal,Done,2025-10-06,2025-10-06,2025-10-17,,,0
+HRG-1051,Story,PVP 리그 시즌2 - 기획,v2.0,EPIC-PVP,SYSTEM,L,pd_lee,internal,Done,2025-10-13,2025-10-15,2025-11-21,140h,13,0
+HRG-1052,Story,PVP 리그 시즌2 - 서버,v2.0,EPIC-PVP,SYSTEM,L,dev_jung,internal,Done,2025-11-17,2025-11-24,2026-01-09,220h,21,1
+HRG-1053,Story,PVP 리그 시즌2 - 클라,v2.0,EPIC-PVP,SYSTEM,L,dev_han,internal,Done,2025-11-17,2025-11-24,2026-01-07,200h,21,0
+HRG-1054,Task,PVP 리그 UI/이펙트,v2.0,EPIC-PVP,SYSTEM,L,art_outsource01,vendor,Done,2025-11-03,2025-11-10,2025-12-26,,,0
+HRG-1055,Story,겨울 시즌 콘텐츠 - 기획,v2.0,EPIC-EV10,CONTENT,L,pd_choi,internal,Done,2025-10-20,2025-10-20,2025-11-28,80h,13,0
+HRG-1056,Story,겨울 시즌 콘텐츠 - 개발,v2.0,EPIC-EV10,CONTENT,L,dev_seo,internal,Done,2025-12-01,2025-12-01,2026-01-12,144h,13,0
+HRG-1057,Task,겨울 맵/NPC 리소스,v2.0,EPIC-EV10,CONTENT,L,art_outsource01,vendor,Done,2025-10-27,2025-11-03,2025-12-19,,,0
+HRG-1058,Story,신년 출석 이벤트,v2.0,EPIC-EV10,CONTENT,S,dev_oh,internal,Done,2025-12-08,2025-12-08,2025-12-17,24h,3,0
+HRG-1059,Story,인벤토리 확장,v2.0,,SYSTEM,S,dev_oh,internal,Done,2025-12-15,2025-12-15,2025-12-24,32h,5,0
+HRG-1060,Story,상점 UI 개선,v2.0,,SYSTEM,S,dev_han,internal,Won't Do,2025-11-10,2025-11-12,2025-12-01,40h,5,0
+HRG-1061,Story,보스 레이드 3단계 - 기획,v2.0,EPIC-RAID,CONTENT,L,pd_park,internal,Done,2025-10-06,2025-10-08,2025-11-14,80h,13,0
+HRG-1062,Story,보스 레이드 3단계 - 개발,v2.0,EPIC-RAID,CONTENT,L,dev_oh,internal,Done,2025-11-10,2025-11-17,2026-01-05,160h,21,2
+HRG-1063,Task,보스 레이드 리소스,v2.0,EPIC-RAID,CONTENT,L,art_outsource01,vendor,Done,2025-10-13,2025-10-20,2025-12-12,,,0
+HRG-1071,Story,신규 클래스 추가 - 기획,v2.1,EPIC-CLS,SYSTEM,L,pd_lee,internal,In Progress,2026-01-19,2026-01-20,,160h,21,0
+HRG-1072,Story,봄 시즌 콘텐츠 - 기획,v2.1,EPIC-EV11,CONTENT,L,,internal,To Do,2026-01-19,,,80h,13,0
+HRG-1073,Story,친구 시스템 개편 - 기획,v2.1,EPIC-FRD,SYSTEM,M,pd_choi,internal,To Do,2026-01-19,,,56h,8,0
+HRG-1101,Story,길드 기능 - 기획,"v1.3,v1.4",EPIC-624,SYSTEM,S,pd_lee,internal,Done,2024-08-14,2024-08-19,2024-08-23,24h,3,1
+HRG-1102,Task,길드 기능 리소스,v1.3,EPIC-624,SYSTEM,S,art_outsource01,vendor,Done,2024-08-14,2024-08-21,2024-08-26,,,0
+HRG-1103,Story,길드 기능 - 서버,v1.3,EPIC-624,SYSTEM,M,dev_nam,internal,Done,2024-08-20,2024-08-27,2024-09-13,64h,21,1
+HRG-1104,Bug,길드 기능 QA 반려 1차,v1.3,EPIC-624,SYSTEM,S,dev_seo,internal,Done,2024-09-11,2024-09-11,2024-09-12,,,0
+HRG-1105,Story,미니게임 - 기획,v1.3,EPIC-595,CONTENT,L,pd_choi,internal,Done,2024-08-05,2024-08-07,2024-08-15,40h,5,0
+HRG-1106,Task,미니게임 리소스,v1.3,EPIC-595,CONTENT,M,art_outsource01,vendor,Done,2024-07-29,2024-08-05,2024-08-22,,,0
+HRG-1107,Story,미니게임 - 서버,v1.3,EPIC-595,CONTENT,L,dev_oh,internal,Done,2024-08-15,2024-08-20,2024-09-12,88h,21,1
+HRG-1108,Bug,미니게임 QA 반려 1차,v1.3,EPIC-595,CONTENT,S,dev_han,internal,Done,2024-09-10,2024-09-10,2024-09-11,,,0
+HRG-1109,Bug,미니게임 QA 반려 2차,v1.3,EPIC-595,CONTENT,S,dev_seo,internal,Done,2024-09-13,2024-09-13,2024-09-19,,,0
+HRG-1110,Story,우편/창고 - 기획,"v1.3,v1.4",EPIC-408,SYSTEM,S,pd_kim,internal,Done,2024-08-16,2024-08-19,2024-08-26,32h,1,1
+HRG-1111,Task,우편/창고 리소스,v1.3,EPIC-408,SYSTEM,S,art_outsource02,vendor,Done,2024-08-15,2024-08-22,2024-08-27,,,0
+HRG-1112,Story,우편/창고 - 서버,v1.3,EPIC-408,SYSTEM,S,dev_jung,internal,Done,2024-08-21,2024-08-28,2024-09-10,56h,1,0
+HRG-1113,Bug,우편/창고 QA 반려 1차,v1.3,EPIC-408,SYSTEM,S,dev_nam,internal,Done,2024-09-11,2024-09-11,2024-09-19,,,0
+HRG-1114,Bug,우편/창고 QA 반려 2차,v1.3,EPIC-408,SYSTEM,S,dev_han,internal,Done,2024-09-19,2024-09-19,2024-09-24,,,0
+HRG-1115,Story,코스튬 팩 - 기획,v1.3,EPIC-371,CONTENT,L,pd_kim,internal,Done,2024-07-15,2024-07-16,2024-08-07,104h,3,0
+HRG-1116,Task,코스튬 팩 리소스,v1.3,EPIC-371,CONTENT,L,art_outsource01,vendor,Done,2024-07-09,2024-07-16,2024-09-02,,,0
+HRG-1117,Story,코스튬 팩 - 서버,v1.3,EPIC-371,CONTENT,L,dev_nam,internal,Done,2024-08-08,2024-08-13,2024-09-04,104h,8,0
+HRG-1118,Story,코스튬 팩 - 클라,v1.3,EPIC-371,CONTENT,L,dev_ryu,internal,Done,2024-08-08,2024-08-13,2024-09-09,104h,1,1
+HRG-1119,Bug,코스튬 팩 QA 반려 1차,v1.3,EPIC-371,CONTENT,S,dev_seo,internal,Done,2024-09-05,2024-09-05,2024-09-09,,,0
+HRG-1120,Story,우편/창고 - 기획,v1.3,EPIC-662,SYSTEM,L,pd_kim,internal,Done,2024-06-07,2024-06-13,2024-07-11,136h,5,0
+HRG-1121,Task,우편/창고 리소스,v1.3,EPIC-662,SYSTEM,L,art_outsource02,vendor,Done,2024-06-21,2024-06-28,2024-07-19,,,0
+HRG-1122,Story,우편/창고 - 서버,v1.3,EPIC-662,SYSTEM,M,dev_oh,internal,Done,2024-07-11,2024-07-19,2024-09-03,208h,8,0
+HRG-1123,Story,우편/창고 - 클라,v1.3,EPIC-662,SYSTEM,L,dev_ryu,internal,Done,2024-07-11,2024-07-19,2024-09-03,208h,5,0
+HRG-1124,Story,레이드 추가 - 기획,v1.3,EPIC-658,CONTENT,M,pd_lee,internal,Done,2024-08-02,2024-08-06,2024-08-16,56h,1,0
+HRG-1125,Task,레이드 추가 리소스,v1.3,EPIC-658,CONTENT,M,art_outsource02,vendor,Done,2024-08-01,2024-08-08,2024-09-03,,,0
+HRG-1126,Story,레이드 추가 - 서버,v1.3,EPIC-658,CONTENT,M,dev_nam,internal,Done,2024-08-16,2024-08-22,2024-09-09,80h,13,0
+HRG-1127,Story,텍스트 수정,v1.3,,CONTENT,S,dev_nam,internal,Done,2024-08-09,2024-08-13,2024-08-20,32h,1,0
+HRG-1128,Story,밸런스 조정,v1.3,,CONTENT,S,dev_nam,internal,Done,2024-08-26,2024-08-28,2024-09-04,32h,2,0
+HRG-1129,Story,밸런스 조정,v1.3,,CONTENT,S,dev_jung,internal,Done,2024-08-21,2024-08-23,2024-08-30,32h,3,0
+HRG-1130,Story,UI 개선,v1.3,,CONTENT,S,art_shin,internal,Done,2024-08-12,2024-08-14,2024-08-21,32h,2,0
+HRG-1131,Story,텍스트 수정,v1.3,,SYSTEM,S,art_shin,internal,Done,2024-08-15,2024-08-19,2024-08-29,56h,3,0
+HRG-1132,Story,밸런스 조정,v1.3,,CONTENT,S,dev_seo,internal,Won't Do,2024-08-27,2024-08-29,2024-09-05,32h,1,0
+HRG-1133,Story,편의성 개선,v1.3,,SYSTEM,S,dev_oh,internal,Done,2024-08-21,2024-08-23,2024-09-04,56h,5,0
+HRG-1134,Story,레이드 추가 - 기획,v1.4,EPIC-501,CONTENT,M,pd_park,internal,Done,2024-09-03,2024-09-05,2024-10-02,104h,8,0
+HRG-1135,Task,레이드 추가 리소스,v1.4,EPIC-501,CONTENT,M,art_outsource01,vendor,Done,2024-09-03,2024-09-10,2024-10-31,,,0
+HRG-1136,Story,레이드 추가 - 서버,v1.4,EPIC-501,CONTENT,L,dev_jung,internal,Done,2024-10-08,2024-10-11,2024-11-12,96h,3,2
+HRG-1137,Story,레이드 추가 - 클라,v1.4,EPIC-501,CONTENT,L,dev_seo,internal,Done,2024-10-01,2024-10-11,2024-11-12,96h,21,2
+HRG-1138,Bug,레이드 추가 QA 반려 1차,v1.4,EPIC-501,CONTENT,S,dev_jung,internal,Done,2024-11-05,2024-11-05,2024-11-08,,,0
+HRG-1139,Story,랭킹 개편 - 기획,v1.4,EPIC-718,SYSTEM,M,pd_lee,internal,Done,2024-08-28,2024-08-29,2024-09-19,80h,13,0
+HRG-1140,Task,랭킹 개편 리소스,v1.4,EPIC-718,SYSTEM,M,art_outsource01,vendor,Done,2024-09-03,2024-09-10,2024-09-23,,,0
+HRG-1141,Story,랭킹 개편 - 서버,v1.4,EPIC-718,SYSTEM,M,dev_oh,internal,Done,2024-09-13,2024-09-24,2024-11-01,168h,13,0
+HRG-1142,Story,패스 상품 - 기획,v1.4,EPIC-101,CONTENT,S,pd_park,internal,Done,2024-10-17,2024-10-22,2024-10-28,24h,3,0
+HRG-1143,Task,패스 상품 리소스,v1.4,EPIC-101,CONTENT,S,art_outsource01,vendor,Done,2024-10-14,2024-10-21,2024-10-29,,,0
+HRG-1144,Story,패스 상품 - 서버,v1.4,EPIC-101,CONTENT,S,dev_nam,internal,Done,2024-10-22,2024-10-30,2024-11-06,32h,8,0
+HRG-1145,Story,상점 개편 - 기획,v1.4,EPIC-832,SYSTEM,M,pd_kim,internal,Done,2024-09-04,2024-09-06,2024-09-30,88h,2,0
+HRG-1146,Task,상점 개편 리소스,v1.4,EPIC-832,SYSTEM,M,art_outsource02,vendor,Done,2024-09-12,2024-09-24,2024-10-07,,,0
+HRG-1147,Story,상점 개편 - 서버,v1.4,EPIC-832,SYSTEM,L,dev_oh,internal,Done,2024-10-01,2024-10-04,2024-11-04,128h,13,0
+HRG-1148,Bug,상점 개편 QA 반려 1차,v1.4,EPIC-832,SYSTEM,S,dev_han,internal,Done,2024-11-05,2024-11-05,2024-11-08,,,0
+HRG-1149,Story,전투 밸런스 - 기획,v1.4,EPIC-293,SYSTEM,M,pd_choi,internal,Done,2024-09-05,2024-09-06,2024-09-30,88h,1,0
+HRG-1150,Task,전투 밸런스 리소스,v1.4,EPIC-293,SYSTEM,M,art_outsource01,vendor,Done,2024-09-11,2024-09-23,2024-10-02,,,0
+HRG-1151,Story,전투 밸런스 - 서버,v1.4,EPIC-293,SYSTEM,M,dev_nam,internal,Done,2024-09-27,2024-10-04,2024-11-01,120h,3,0
+HRG-1152,Bug,전투 밸런스 QA 반려 1차,v1.4,EPIC-293,SYSTEM,S,dev_seo,internal,Done,2024-11-04,2024-11-04,2024-11-06,,,0
+HRG-1153,Story,업적 시스템 - 기획,v1.4,EPIC-336,SYSTEM,L,pd_lee,internal,Done,2024-08-05,2024-08-09,2024-09-06,136h,13,0
+HRG-1154,Task,업적 시스템 리소스,v1.4,EPIC-336,SYSTEM,L,art_outsource01,vendor,Done,2024-08-22,2024-08-29,2024-10-01,,,0
+HRG-1155,Story,업적 시스템 - 서버,v1.4,EPIC-336,SYSTEM,L,dev_nam,internal,Done,2024-09-05,2024-09-13,2024-10-31,192h,2,0
+HRG-1156,Story,업적 시스템 - 클라,v1.4,EPIC-336,SYSTEM,L,dev_han,internal,Done,2024-09-10,2024-09-13,2024-10-31,192h,5,0
+HRG-1157,Bug,업적 시스템 QA 반려 1차,v1.4,EPIC-336,SYSTEM,S,dev_nam,internal,Done,2024-11-01,2024-11-01,2024-11-04,,,0
+HRG-1158,Story,랭킹 개편 - 기획,v1.4,EPIC-192,SYSTEM,S,pd_kim,internal,Done,2024-10-07,2024-10-14,2024-10-21,32h,21,0
+HRG-1159,Task,랭킹 개편 리소스,v1.4,EPIC-192,SYSTEM,S,art_outsource01,vendor,Done,2024-10-11,2024-10-18,2024-10-23,,,0
+HRG-1160,Story,랭킹 개편 - 서버,v1.4,EPIC-192,SYSTEM,S,dev_oh,internal,Done,2024-10-17,2024-10-23,2024-11-06,64h,3,0
+HRG-1161,Bug,랭킹 개편 QA 반려 1차,v1.4,EPIC-192,SYSTEM,S,dev_nam,internal,Done,2024-11-07,2024-11-07,2024-11-12,,,0
+HRG-1162,Story,버그 수정 묶음,v1.4,,SYSTEM,S,dev_ryu,internal,Done,2024-10-01,2024-10-04,2024-10-17,56h,5,0
+HRG-1163,Story,밸런스 조정,v1.4,,CONTENT,S,dev_oh,internal,Won't Do,2024-10-11,2024-10-15,2024-10-22,32h,1,0
+HRG-1164,Story,편의성 개선,v1.4,,CONTENT,M,dev_seo,internal,Done,2024-10-01,2024-10-04,2024-10-24,88h,1,0
+HRG-1165,Story,버그 수정 묶음,v1.4,,SYSTEM,S,dev_ryu,internal,Done,2024-10-08,2024-10-11,2024-10-23,56h,3,0
+HRG-1166,Story,버그 수정 묶음,v1.4,,SYSTEM,M,dev_seo,internal,Done,2024-09-19,2024-09-23,2024-10-23,136h,1,0
+HRG-1167,Story,편의성 개선,v1.4,,SYSTEM,S,dev_ryu,internal,Done,2024-10-15,2024-10-17,2024-10-29,56h,1,0
+HRG-1168,Story,텍스트 수정,v1.4,,CONTENT,M,dev_seo,internal,Done,2024-09-19,2024-09-23,2024-10-14,88h,2,0
+HRG-1169,Story,UI 개선,v1.4,,CONTENT,S,art_shin,internal,Done,2024-10-21,2024-10-23,2024-10-30,32h,3,0
+HRG-1170,Story,텍스트 수정,v1.4,,CONTENT,M,dev_oh,internal,Done,2024-09-19,2024-09-23,2024-10-14,88h,2,0
+HRG-1171,Story,협동 콘텐츠 - 기획,v1.5,EPIC-644,CONTENT,L,pd_lee,internal,Done,2024-11-21,2024-11-25,2024-12-19,120h,1,0
+HRG-1172,Task,협동 콘텐츠 리소스,v1.5,EPIC-644,CONTENT,L,art_outsource01,vendor,Done,2024-11-28,2024-12-05,2025-01-23,,,0
+HRG-1173,Story,협동 콘텐츠 - 서버,v1.5,EPIC-644,CONTENT,L,dev_nam,internal,Done,2024-12-27,2024-12-31,2025-02-05,96h,3,2
+HRG-1174,Story,협동 콘텐츠 - 클라,v1.5,EPIC-644,CONTENT,L,dev_seo,internal,Done,2024-12-26,2024-12-31,2025-01-23,96h,13,0
+HRG-1175,Story,패스 상품 - 기획,v1.5,EPIC-436,CONTENT,M,pd_choi,internal,Done,2024-12-11,2024-12-17,2024-12-26,40h,5,0
+HRG-1176,Task,패스 상품 리소스,v1.5,EPIC-436,CONTENT,M,art_outsource02,vendor,Done,2024-12-06,2024-12-13,2025-01-08,,,0
+HRG-1177,Story,패스 상품 - 서버,v1.5,EPIC-436,CONTENT,M,dev_oh,internal,Done,2024-12-23,2025-01-02,2025-02-03,104h,13,1
+HRG-1178,Story,펫 시스템 - 기획,"v1.5,v1.6",EPIC-878,SYSTEM,L,pd_park,internal,Done,2024-10-21,2024-10-24,2024-11-25,144h,13,1
+HRG-1179,Task,펫 시스템 리소스,v1.5,EPIC-878,SYSTEM,L,art_outsource01,vendor,Done,2024-11-11,2024-11-18,2024-12-16,,,0
+HRG-1180,Story,펫 시스템 - 서버,v1.5,EPIC-878,SYSTEM,L,dev_nam,internal,Done,2024-11-22,2024-12-02,2025-01-16,192h,13,0
+HRG-1181,Story,펫 시스템 - 클라,v1.5,EPIC-878,SYSTEM,L,dev_han,internal,Done,2024-11-27,2024-12-02,2025-01-16,192h,3,0
+HRG-1182,Bug,펫 시스템 QA 반려 1차,v1.5,EPIC-878,SYSTEM,M,dev_seo,internal,Done,2025-01-17,2025-01-17,2025-01-22,,,0
+HRG-1183,Story,레이드 추가 - 기획,v1.5,EPIC-345,CONTENT,S,pd_kim,internal,Done,2025-01-06,2025-01-10,2025-01-16,24h,13,0
+HRG-1184,Task,레이드 추가 리소스,v1.5,EPIC-345,CONTENT,S,art_outsource01,vendor,Done,2024-12-31,2025-01-08,2025-01-15,,,0
+HRG-1185,Story,레이드 추가 - 서버,v1.5,EPIC-345,CONTENT,S,dev_jung,internal,Done,2025-01-13,2025-01-20,2025-01-27,32h,3,0
+HRG-1186,Bug,레이드 추가 QA 반려 1차,v1.5,EPIC-345,CONTENT,S,dev_han,internal,Done,2025-01-31,2025-01-31,2025-02-03,,,0
+HRG-1187,Bug,레이드 추가 QA 반려 2차,v1.5,EPIC-345,CONTENT,S,dev_seo,internal,Done,2025-02-05,2025-02-05,2025-02-06,,,0
+HRG-1188,Story,상점 개편 - 기획,v1.5,EPIC-690,SYSTEM,L,pd_choi,internal,Done,2024-11-07,2024-11-08,2024-12-06,136h,2,0
+HRG-1189,Task,상점 개편 리소스,v1.5,EPIC-690,SYSTEM,L,art_outsource01,vendor,Done,2024-11-18,2024-11-25,2024-12-17,,,0
+HRG-1190,Story,상점 개편 - 서버,v1.5,EPIC-690,SYSTEM,L,dev_nam,internal,Done,2024-12-06,2024-12-13,2025-01-20,152h,21,0
+HRG-1191,Story,상점 개편 - 클라,v1.5,EPIC-690,SYSTEM,L,dev_seo,internal,Done,2024-12-09,2024-12-13,2025-01-23,152h,2,1
+HRG-1192,Bug,상점 개편 QA 반려 1차,v1.5,EPIC-690,SYSTEM,S,dev_ryu,internal,Done,2025-01-21,2025-01-21,2025-01-24,,,0
+HRG-1193,Story,출석 이벤트 - 기획,"v1.5,v1.6",EPIC-754,CONTENT,M,pd_kim,internal,Done,2024-12-13,2024-12-18,2024-12-30,48h,8,1
+HRG-1194,Task,출석 이벤트 리소스,v1.5,EPIC-754,CONTENT,L,art_outsource01,vendor,Done,2024-12-09,2024-12-16,2025-01-15,,,0
+HRG-1195,Story,출석 이벤트 - 서버,v1.5,EPIC-754,CONTENT,M,dev_nam,internal,Done,2024-12-24,2025-01-03,2025-01-24,96h,5,0
+HRG-1196,Story,텍스트 수정,v1.5,,CONTENT,M,art_shin,internal,Done,2024-12-16,2024-12-18,2025-01-08,88h,3,0
+HRG-1197,Story,버그 수정 묶음,v1.5,,SYSTEM,M,dev_seo,internal,Done,2024-12-26,2024-12-30,2025-01-10,56h,5,0
+HRG-1198,Story,밸런스 조정,v1.5,,CONTENT,S,dev_nam,internal,Done,2024-12-18,2024-12-20,2024-12-30,32h,2,0
+HRG-1199,Story,UI 개선,v1.5,,CONTENT,S,dev_nam,internal,Done,2024-12-30,2025-01-02,2025-01-09,32h,2,0
+HRG-1200,Story,버그 수정 묶음,v1.5,,SYSTEM,S,dev_nam,internal,Done,2024-12-26,2024-12-30,2025-01-10,56h,5,0
+HRG-1201,Story,UI 개선,v1.5,,CONTENT,S,art_shin,internal,Done,2024-12-30,2025-01-02,2025-01-09,32h,3,0
+HRG-1202,Story,버그 수정 묶음,v1.5,,CONTENT,M,dev_oh,internal,Done,2024-12-27,2024-12-31,2025-01-20,88h,2,0
+HRG-1203,Story,출석 이벤트 - 기획,v1.6,EPIC-846,CONTENT,L,pd_choi,internal,Done,2025-01-10,2025-01-14,2025-02-06,96h,2,0
+HRG-1204,Task,출석 이벤트 리소스,v1.6,EPIC-846,CONTENT,L,art_outsource01,vendor,Done,2025-01-03,2025-01-10,2025-03-28,,,0
+HRG-1205,Story,출석 이벤트 - 서버,v1.6,EPIC-846,CONTENT,L,dev_jung,internal,Done,2025-02-10,2025-02-13,2025-03-20,112h,3,2
+HRG-1206,Story,출석 이벤트 - 클라,v1.6,EPIC-846,CONTENT,L,dev_ryu,internal,Done,2025-02-06,2025-02-13,2025-03-17,112h,21,1
+HRG-1207,Bug,출석 이벤트 QA 반려 1차,v1.6,EPIC-846,CONTENT,S,dev_ryu,internal,Done,2025-03-13,2025-03-13,2025-03-18,,,0
+HRG-1208,Story,우편/창고 - 기획,v1.6,EPIC-903,SYSTEM,L,pd_park,internal,Done,2024-12-06,2024-12-09,2025-01-10,144h,13,0
+HRG-1209,Task,우편/창고 리소스,v1.6,EPIC-903,SYSTEM,L,art_outsource01,vendor,Done,2024-12-23,2024-12-31,2025-02-03,,,0
+HRG-1210,Story,우편/창고 - 서버,v1.6,EPIC-903,SYSTEM,M,dev_nam,internal,Done,2025-01-13,2025-01-20,2025-03-10,192h,1,0
+HRG-1211,Story,우편/창고 - 클라,v1.6,EPIC-903,SYSTEM,M,dev_seo,internal,Done,2025-01-15,2025-01-20,2025-03-10,192h,8,0
+HRG-1212,Story,펫 시스템 - 기획,v1.6,EPIC-465,SYSTEM,M,pd_lee,internal,Done,2024-12-30,2025-01-06,2025-01-24,96h,5,0
+HRG-1213,Task,펫 시스템 리소스,v1.6,EPIC-465,SYSTEM,M,art_outsource01,vendor,Done,2025-01-14,2025-01-21,2025-02-04,,,0
+HRG-1214,Story,펫 시스템 - 서버,v1.6,EPIC-465,SYSTEM,M,dev_nam,internal,Done,2025-01-27,2025-02-04,2025-03-12,160h,21,0
+HRG-1215,Bug,펫 시스템 QA 반려 1차,v1.6,EPIC-465,SYSTEM,S,dev_jung,internal,Done,2025-03-13,2025-03-13,2025-03-17,,,0
+HRG-1216,Story,장비 각성 - 기획,v1.6,EPIC-777,SYSTEM,S,pd_kim,internal,Done,2025-02-14,2025-02-17,2025-02-25,40h,3,0
+HRG-1217,Task,장비 각성 리소스,v1.6,EPIC-777,SYSTEM,S,art_outsource01,vendor,Done,2025-02-17,2025-02-24,2025-02-27,,,0
+HRG-1218,Story,장비 각성 - 서버,v1.6,EPIC-777,SYSTEM,S,dev_nam,internal,Done,2025-02-25,2025-02-27,2025-03-17,72h,13,0
+HRG-1219,Story,강화 시스템 - 기획,v1.6,EPIC-186,SYSTEM,M,pd_choi,internal,Done,2025-01-09,2025-01-10,2025-02-03,88h,21,0
+HRG-1220,Task,강화 시스템 리소스,v1.6,EPIC-186,SYSTEM,M,art_outsource02,vendor,Done,2025-01-17,2025-01-24,2025-02-07,,,0
+HRG-1221,Story,강화 시스템 - 서버,v1.6,EPIC-186,SYSTEM,M,dev_jung,internal,Done,2025-01-27,2025-02-06,2025-03-13,152h,2,0
+HRG-1222,Story,업적 시스템 - 기획,v1.6,EPIC-370,SYSTEM,S,pd_choi,internal,Done,2025-02-17,2025-02-18,2025-02-25,32h,3,0
+HRG-1223,Task,업적 시스템 리소스,v1.6,EPIC-370,SYSTEM,S,art_outsource01,vendor,Done,2025-02-14,2025-02-21,2025-02-26,,,0
+HRG-1224,Story,업적 시스템 - 서버,v1.6,EPIC-370,SYSTEM,S,dev_nam,internal,Done,2025-02-19,2025-02-27,2025-03-17,72h,13,0
+HRG-1225,Bug,업적 시스템 QA 반려 1차,v1.6,EPIC-370,SYSTEM,S,dev_seo,internal,Done,2025-03-18,2025-03-18,2025-03-20,,,0
+HRG-1226,Story,길드 기능 - 기획,v1.6,EPIC-412,SYSTEM,M,pd_park,internal,Done,2024-11-27,2024-11-28,2025-01-06,168h,8,0
+HRG-1227,Task,길드 기능 리소스,v1.6,EPIC-412,SYSTEM,M,art_outsource02,vendor,Done,2024-12-11,2024-12-18,2025-01-13,,,0
+HRG-1228,Story,길드 기능 - 서버,v1.6,EPIC-412,SYSTEM,L,dev_nam,internal,Done,2025-01-06,2025-01-14,2025-03-11,208h,8,1
+HRG-1229,Story,길드 기능 - 클라,v1.6,EPIC-412,SYSTEM,L,dev_ryu,internal,Done,2025-01-07,2025-01-14,2025-03-06,208h,21,0
+HRG-1230,Story,월드보스 - 기획,v1.6,EPIC-832,CONTENT,S,pd_choi,internal,Done,2025-02-21,2025-02-26,2025-03-05,24h,21,0
+HRG-1231,Task,월드보스 리소스,v1.6,EPIC-832,CONTENT,S,art_outsource02,vendor,Done,2025-02-19,2025-02-26,2025-03-07,,,0
+HRG-1232,Story,월드보스 - 서버,v1.6,EPIC-832,CONTENT,M,dev_nam,internal,Done,2025-02-28,2025-03-07,2025-03-17,40h,8,0
+HRG-1233,Story,UI 개선,v1.6,,SYSTEM,S,dev_seo,internal,Done,2025-02-12,2025-02-14,2025-02-26,56h,3,0
+HRG-1234,Story,버그 수정 묶음,v1.6,,CONTENT,M,art_shin,internal,Done,2025-01-23,2025-01-27,2025-02-18,88h,3,0
+HRG-1235,Story,편의성 개선,v1.6,,CONTENT,S,art_shin,internal,Done,2025-02-12,2025-02-14,2025-02-21,32h,3,0
+HRG-1236,Story,UI 개선,v1.6,,CONTENT,L,dev_jung,internal,Done,2025-02-10,2025-02-12,2025-03-04,88h,5,0
+HRG-1237,Story,버그 수정 묶음,v1.6,,SYSTEM,S,dev_oh,internal,Done,2025-02-21,2025-02-25,2025-03-10,56h,5,0
+HRG-1238,Story,텍스트 수정,v1.6,,CONTENT,S,dev_seo,internal,Done,2025-02-24,2025-02-26,2025-03-06,32h,5,0
+HRG-1239,Story,전투 밸런스 - 기획,"v1.7,v1.8",EPIC-160,SYSTEM,M,pd_lee,internal,Done,2025-03-10,2025-03-11,2025-03-31,96h,5,1
+HRG-1240,Task,전투 밸런스 리소스,v1.7,EPIC-160,SYSTEM,M,art_outsource02,vendor,Done,2025-03-17,2025-03-24,2025-04-03,,,0
+HRG-1241,Story,전투 밸런스 - 서버,v1.7,EPIC-160,SYSTEM,M,dev_jung,internal,Done,2025-03-28,2025-04-03,2025-05-22,192h,5,1
+HRG-1242,Story,출석 이벤트 - 기획,v1.7,EPIC-903,CONTENT,M,pd_park,internal,Done,2025-04-07,2025-04-08,2025-04-22,64h,13,0
+HRG-1243,Task,출석 이벤트 리소스,v1.7,EPIC-903,CONTENT,M,art_outsource02,vendor,Done,2025-04-04,2025-04-11,2025-05-02,,,0
+HRG-1244,Story,출석 이벤트 - 서버,v1.7,EPIC-903,CONTENT,L,dev_oh,internal,Done,2025-04-24,2025-04-28,2025-05-21,96h,2,0
+HRG-1245,Bug,출석 이벤트 QA 반려 1차,v1.7,EPIC-903,CONTENT,S,dev_jung,internal,Done,2025-05-22,2025-05-22,2025-05-26,,,0
+HRG-1246,Story,월드보스 - 기획,v1.7,EPIC-183,CONTENT,S,pd_park,internal,Done,2025-03-28,2025-04-02,2025-04-16,64h,8,0
+HRG-1247,Task,월드보스 리소스,v1.7,EPIC-183,CONTENT,M,art_outsource02,vendor,Done,2025-03-27,2025-04-03,2025-05-01,,,0
+HRG-1248,Story,월드보스 - 서버,v1.7,EPIC-183,CONTENT,M,dev_jung,internal,Done,2025-04-15,2025-04-21,2025-05-20,120h,13,0
+HRG-1249,Story,던전 확장 - 기획,v1.7,EPIC-499,CONTENT,L,pd_park,internal,Done,2025-03-20,2025-03-26,2025-04-18,112h,1,0
+HRG-1250,Task,던전 확장 리소스,v1.7,EPIC-499,CONTENT,L,art_outsource02,vendor,Done,2025-03-20,2025-03-27,2025-06-02,,,0
+HRG-1251,Story,던전 확장 - 서버,v1.7,EPIC-499,CONTENT,L,dev_oh,internal,Done,2025-04-18,2025-04-25,2025-05-19,96h,3,0
+HRG-1252,Story,던전 확장 - 클라,v1.7,EPIC-499,CONTENT,L,dev_ryu,internal,Done,2025-04-22,2025-04-25,2025-05-22,96h,5,1
+HRG-1253,Story,클래스 추가 - 기획,"v1.7,v1.8",EPIC-656,SYSTEM,M,pd_park,internal,Done,2025-03-20,2025-03-24,2025-04-09,80h,3,1
+HRG-1254,Task,클래스 추가 리소스,v1.7,EPIC-656,SYSTEM,M,art_outsource02,vendor,Done,2025-03-26,2025-04-02,2025-04-15,,,0
+HRG-1255,Story,클래스 추가 - 서버,v1.7,EPIC-656,SYSTEM,M,dev_oh,internal,Done,2025-04-07,2025-04-14,2025-05-20,152h,3,0
+HRG-1256,Story,던전 확장 - 기획,v1.7,EPIC-453,CONTENT,M,pd_kim,internal,Done,2025-04-07,2025-04-08,2025-04-17,48h,13,0
+HRG-1257,Task,던전 확장 리소스,v1.7,EPIC-453,CONTENT,M,art_outsource02,vendor,Done,2025-04-01,2025-04-08,2025-04-30,,,0
+HRG-1258,Story,던전 확장 - 서버,v1.7,EPIC-453,CONTENT,M,dev_oh,internal,Done,2025-04-16,2025-04-22,2025-05-26,120h,8,1
+HRG-1259,Story,강화 시스템 - 기획,v1.7,EPIC-608,SYSTEM,L,pd_lee,internal,Done,2025-01-23,2025-01-31,2025-03-17,200h,1,0
+HRG-1260,Task,강화 시스템 리소스,v1.7,EPIC-608,SYSTEM,L,art_outsource01,vendor,Done,2025-02-25,2025-03-05,2025-04-02,,,0
+HRG-1261,Story,강화 시스템 - 서버,v1.7,EPIC-608,SYSTEM,L,dev_nam,internal,Done,2025-03-21,2025-03-26,2025-05-15,216h,21,0
+HRG-1262,Story,강화 시스템 - 클라,v1.7,EPIC-608,SYSTEM,L,dev_seo,internal,Done,2025-03-18,2025-03-26,2025-05-15,216h,5,0
+HRG-1263,Story,텍스트 수정,v1.7,,CONTENT,S,dev_jung,internal,Done,2025-04-14,2025-04-16,2025-04-23,32h,2,0
+HRG-1264,Story,밸런스 조정,v1.7,,CONTENT,M,art_shin,internal,Done,2025-04-21,2025-04-23,2025-04-30,32h,1,0
+HRG-1265,Story,UI 개선,v1.7,,SYSTEM,M,dev_ryu,internal,Done,2025-03-31,2025-04-02,2025-04-30,136h,1,0
+HRG-1266,Story,UI 개선,v1.7,,CONTENT,M,art_yoon,internal,Done,2025-04-14,2025-04-16,2025-04-23,32h,1,0
+HRG-1267,Story,버그 수정 묶음,v1.7,,CONTENT,S,dev_seo,internal,Done,2025-05-07,2025-05-09,2025-05-16,32h,3,0
+HRG-1268,Story,텍스트 수정,v1.7,,CONTENT,S,dev_han,internal,Done,2025-05-08,2025-05-12,2025-05-19,32h,3,0
+HRG-1269,Story,UI 개선,v1.7,,SYSTEM,M,dev_han,internal,Done,2025-04-03,2025-04-07,2025-05-07,136h,3,0
+HRG-1270,Story,밸런스 조정,v1.7,,CONTENT,M,dev_jung,internal,Done,2025-04-11,2025-04-15,2025-05-02,88h,1,0
+HRG-1271,Story,출석 이벤트 - 기획,v1.8,EPIC-511,CONTENT,S,pd_kim,internal,Done,2025-08-22,2025-08-27,2025-09-02,24h,2,0
+HRG-1272,Task,출석 이벤트 리소스,v1.8,EPIC-511,CONTENT,S,art_outsource02,vendor,Done,2025-08-21,2025-08-28,2025-09-09,,,0
+HRG-1273,Story,출석 이벤트 - 서버,v1.8,EPIC-511,CONTENT,S,dev_oh,internal,Done,2025-09-02,2025-09-05,2025-09-12,32h,5,0
+HRG-1274,Bug,출석 이벤트 QA 반려 1차,v1.8,EPIC-511,CONTENT,S,dev_oh,internal,Done,2025-09-15,2025-09-15,2025-09-16,,,0
+HRG-1275,Bug,출석 이벤트 QA 반려 2차,v1.8,EPIC-511,CONTENT,S,dev_han,internal,Done,2025-09-18,2025-09-18,2025-09-22,,,0
+HRG-1276,Story,친구 시스템 - 기획,v1.8,EPIC-445,SYSTEM,S,pd_lee,internal,Done,2025-08-18,2025-08-20,2025-08-27,32h,2,0
+HRG-1277,Task,친구 시스템 리소스,v1.8,EPIC-445,SYSTEM,S,art_outsource01,vendor,Done,2025-08-18,2025-08-25,2025-08-28,,,0
+HRG-1278,Story,친구 시스템 - 서버,v1.8,EPIC-445,SYSTEM,S,dev_oh,internal,Done,2025-08-27,2025-08-29,2025-09-12,64h,1,0
+HRG-1279,Story,던전 확장 - 기획,v1.8,EPIC-566,CONTENT,S,pd_lee,internal,Done,2025-08-22,2025-08-26,2025-09-02,32h,21,0
+HRG-1280,Task,던전 확장 리소스,v1.8,EPIC-566,CONTENT,S,art_outsource01,vendor,Done,2025-08-21,2025-08-28,2025-09-08,,,0
+HRG-1281,Story,던전 확장 - 서버,v1.8,EPIC-566,CONTENT,S,dev_jung,internal,Done,2025-09-03,2025-09-05,2025-09-12,32h,3,0
+HRG-1282,Story,코스튬 팩 - 기획,v1.8,EPIC-694,CONTENT,S,pd_park,internal,Done,2025-08-19,2025-08-22,2025-08-29,32h,5,0
+HRG-1283,Task,코스튬 팩 리소스,v1.8,EPIC-694,CONTENT,S,art_outsource02,vendor,Done,2025-08-14,2025-08-22,2025-09-01,,,0
+HRG-1284,Story,코스튬 팩 - 서버,v1.8,EPIC-694,CONTENT,S,dev_oh,internal,Done,2025-08-25,2025-09-02,2025-09-12,48h,3,0
+HRG-1285,Story,레이드 추가 - 기획,v1.8,EPIC-816,CONTENT,S,pd_park,internal,Done,2025-08-21,2025-08-26,2025-09-02,32h,2,0
+HRG-1286,Task,레이드 추가 리소스,v1.8,EPIC-816,CONTENT,S,art_outsource02,vendor,Done,2025-08-18,2025-08-25,2025-09-02,,,0
+HRG-1287,Story,레이드 추가 - 서버,v1.8,EPIC-816,CONTENT,S,dev_oh,internal,Done,2025-08-28,2025-09-04,2025-09-17,40h,2,1
+HRG-1288,Bug,레이드 추가 QA 반려 1차,v1.8,EPIC-816,CONTENT,S,dev_seo,internal,Done,2025-09-15,2025-09-15,2025-09-16,,,0
+HRG-1289,Story,업적 시스템 - 기획,v1.8,EPIC-461,SYSTEM,S,pd_lee,internal,Done,2025-08-14,2025-08-19,2025-08-26,32h,1,0
+HRG-1290,Task,업적 시스템 리소스,v1.8,EPIC-461,SYSTEM,S,art_outsource01,vendor,Done,2025-08-14,2025-08-22,2025-08-27,,,0
+HRG-1291,Story,업적 시스템 - 서버,v1.8,EPIC-461,SYSTEM,S,dev_jung,internal,Done,2025-08-20,2025-08-28,2025-09-12,72h,13,0
+HRG-1292,Story,텍스트 수정,v1.8,,CONTENT,M,dev_ryu,internal,Done,2025-08-14,2025-08-19,2025-09-05,88h,3,0
+HRG-1293,Story,밸런스 조정,v1.8,,CONTENT,S,dev_nam,internal,Done,2025-08-14,2025-08-19,2025-08-26,32h,3,0
+HRG-1294,Story,편의성 개선,v1.8,,CONTENT,S,art_shin,internal,Done,2025-08-21,2025-08-25,2025-09-01,32h,3,0
+HRG-1295,Story,버그 수정 묶음,v1.8,,SYSTEM,S,art_shin,internal,Done,2025-08-06,2025-08-08,2025-08-21,56h,5,0
+HRG-1296,Story,텍스트 수정,v1.8,,SYSTEM,S,dev_oh,internal,Done,2025-08-22,2025-08-26,2025-09-05,56h,5,0
+HRG-1297,Story,밸런스 조정,v1.8,,CONTENT,S,art_shin,internal,Done,2025-09-01,2025-09-03,2025-09-10,32h,1,0
+HRG-1298,Story,밸런스 조정,v1.8,,CONTENT,S,dev_nam,internal,Done,2025-08-11,2025-08-13,2025-08-21,32h,1,0
+HRG-1299,Story,월드보스 - 기획,v1.9,EPIC-302,CONTENT,S,pd_kim,internal,Done,2025-10-23,2025-10-27,2025-11-03,32h,3,0
+HRG-1300,Task,월드보스 리소스,v1.9,EPIC-302,CONTENT,S,art_outsource02,vendor,Done,2025-10-17,2025-10-24,2025-11-04,,,0
+HRG-1301,Story,월드보스 - 서버,v1.9,EPIC-302,CONTENT,S,dev_jung,internal,Done,2025-10-29,2025-11-06,2025-11-14,40h,3,0
+HRG-1302,Bug,월드보스 QA 반려 1차,v1.9,EPIC-302,CONTENT,S,dev_oh,internal,Done,2025-11-17,2025-11-17,2025-11-20,,,0
+HRG-1303,Story,월드보스 - 기획,v1.9,EPIC-754,CONTENT,M,pd_lee,internal,Done,2025-10-20,2025-10-22,2025-10-30,40h,2,0
+HRG-1304,Task,월드보스 리소스,v1.9,EPIC-754,CONTENT,S,art_outsource01,vendor,Done,2025-10-15,2025-10-22,2025-10-30,,,0
+HRG-1305,Story,월드보스 - 서버,v1.9,EPIC-754,CONTENT,S,dev_nam,internal,Done,2025-10-31,2025-11-04,2025-11-19,48h,5,1
+HRG-1306,Story,상점 개편 - 기획,v1.9,EPIC-422,SYSTEM,M,pd_lee,internal,Done,2025-07-14,2025-07-15,2025-08-29,216h,2,0
+HRG-1307,Task,상점 개편 리소스,v1.9,EPIC-422,SYSTEM,L,art_outsource02,vendor,Done,2025-08-12,2025-08-20,2025-09-23,,,0
+HRG-1308,Story,상점 개편 - 서버,v1.9,EPIC-422,SYSTEM,L,dev_nam,internal,Done,2025-08-29,2025-09-05,2025-11-07,256h,21,0
+HRG-1309,Story,상점 개편 - 클라,v1.9,EPIC-422,SYSTEM,L,dev_seo,internal,Done,2025-08-29,2025-09-05,2025-11-07,256h,3,0
+HRG-1310,Bug,상점 개편 QA 반려 1차,v1.9,EPIC-422,SYSTEM,S,dev_ryu,internal,Done,2025-11-10,2025-11-10,2025-11-11,,,0
+HRG-1311,Story,매칭 로직 - 기획,v1.9,EPIC-439,SYSTEM,S,pd_kim,internal,Done,2025-10-17,2025-10-20,2025-10-29,48h,5,0
+HRG-1312,Task,매칭 로직 리소스,v1.9,EPIC-439,SYSTEM,M,art_outsource01,vendor,Done,2025-10-20,2025-10-27,2025-10-30,,,0
+HRG-1313,Story,매칭 로직 - 서버,v1.9,EPIC-439,SYSTEM,S,dev_jung,internal,Done,2025-10-24,2025-11-03,2025-11-19,56h,3,1
+HRG-1314,Story,우편/창고 - 기획,"v1.9,v2.0",EPIC-482,SYSTEM,L,pd_park,internal,Done,2025-08-01,2025-08-05,2025-09-09,160h,5,1
+HRG-1315,Task,우편/창고 리소스,v1.9,EPIC-482,SYSTEM,L,art_outsource02,vendor,Done,2025-08-22,2025-08-29,2025-09-23,,,0
+HRG-1316,Story,우편/창고 - 서버,v1.9,EPIC-482,SYSTEM,L,dev_oh,internal,Done,2025-09-10,2025-09-17,2025-11-04,184h,1,0
+HRG-1317,Story,우편/창고 - 클라,v1.9,EPIC-482,SYSTEM,L,dev_ryu,internal,Done,2025-09-10,2025-09-17,2025-11-12,184h,1,2
+HRG-1318,Bug,우편/창고 QA 반려 1차,v1.9,EPIC-482,SYSTEM,S,dev_oh,internal,Done,2025-11-05,2025-11-05,2025-11-06,,,0
+HRG-1319,Bug,우편/창고 QA 반려 2차,v1.9,EPIC-482,SYSTEM,S,dev_jung,internal,Done,2025-11-10,2025-11-10,2025-11-13,,,0
+HRG-1320,Story,협동 콘텐츠 - 기획,v1.9,EPIC-557,CONTENT,S,pd_lee,internal,Done,2025-10-24,2025-10-28,2025-11-04,32h,3,0
+HRG-1321,Task,협동 콘텐츠 리소스,v1.9,EPIC-557,CONTENT,S,art_outsource01,vendor,Done,2025-10-20,2025-10-27,2025-11-05,,,0
+HRG-1322,Story,협동 콘텐츠 - 서버,v1.9,EPIC-557,CONTENT,S,dev_nam,internal,Done,2025-10-30,2025-11-06,2025-11-19,40h,8,1
+HRG-1323,Story,출석 이벤트 - 기획,"v1.9,v2.0",EPIC-311,CONTENT,S,pd_park,internal,Done,2025-10-23,2025-10-28,2025-11-03,24h,3,1
+HRG-1324,Task,출석 이벤트 리소스,v1.9,EPIC-311,CONTENT,S,art_outsource01,vendor,Done,2025-10-22,2025-10-29,2025-11-10,,,0
+HRG-1325,Story,출석 이벤트 - 서버,v1.9,EPIC-311,CONTENT,S,dev_nam,internal,Done,2025-10-30,2025-11-06,2025-11-24,40h,2,2
+HRG-1326,Bug,출석 이벤트 QA 반려 1차,v1.9,EPIC-311,CONTENT,S,dev_ryu,internal,Done,2025-11-17,2025-11-17,2025-11-19,,,0
+HRG-1327,Story,친구 시스템 - 기획,v1.9,EPIC-931,SYSTEM,L,pd_park,internal,Done,2025-08-01,2025-08-05,2025-09-10,168h,3,0
+HRG-1328,Task,친구 시스템 리소스,v1.9,EPIC-931,SYSTEM,L,art_outsource02,vendor,Done,2025-08-20,2025-08-27,2025-09-18,,,0
+HRG-1329,Story,친구 시스템 - 서버,v1.9,EPIC-931,SYSTEM,M,dev_oh,internal,Done,2025-09-16,2025-09-18,2025-11-10,192h,3,1
+HRG-1330,Story,친구 시스템 - 클라,v1.9,EPIC-931,SYSTEM,L,dev_han,internal,Done,2025-09-15,2025-09-18,2025-11-05,192h,3,0
+HRG-1331,Bug,친구 시스템 QA 반려 1차,v1.9,EPIC-931,SYSTEM,S,dev_oh,internal,Done,2025-11-06,2025-11-06,2025-11-07,,,0
+HRG-1332,Story,UI 개선,v1.9,,CONTENT,M,dev_oh,internal,Won't Do,2025-09-26,2025-09-30,2025-10-24,88h,2,0
+HRG-1333,Story,버그 수정 묶음,v1.9,,SYSTEM,S,dev_han,internal,Done,2025-10-14,2025-10-16,2025-10-28,56h,3,0
+HRG-1334,Story,텍스트 수정,v1.9,,SYSTEM,S,dev_oh,internal,Done,2025-10-02,2025-10-13,2025-10-23,56h,5,0
+HRG-1335,Story,편의성 개선,v1.9,,CONTENT,S,dev_oh,internal,Done,2025-10-14,2025-10-16,2025-10-23,32h,2,0
+HRG-1336,Story,UI 개선,v1.9,,CONTENT,S,dev_nam,internal,Done,2025-10-10,2025-10-14,2025-10-21,32h,2,0
+HRG-1337,Story,편의성 개선,v1.9,,CONTENT,M,dev_oh,internal,Done,2025-09-26,2025-09-30,2025-10-24,88h,1,0
+HRG-1338,Story,UI 개선,v1.9,,CONTENT,M,dev_seo,internal,Done,2025-10-13,2025-10-15,2025-11-03,88h,5,0
+HRG-1339,Story,편의성 개선,v1.9,,CONTENT,S,dev_han,internal,Done,2025-10-16,2025-10-20,2025-10-27,32h,1,0
+HRG-1340,Story,펫 시스템 - 기획,v2.0,EPIC-778,SYSTEM,L,pd_lee,internal,Done,2025-09-18,2025-09-23,2025-11-04,168h,2,0
+HRG-1341,Task,펫 시스템 리소스,v2.0,EPIC-778,SYSTEM,L,art_outsource02,vendor,Done,2025-10-02,2025-10-16,2025-11-18,,,0
+HRG-1342,Story,펫 시스템 - 서버,v2.0,EPIC-778,SYSTEM,L,dev_jung,internal,Done,2025-11-04,2025-11-12,2026-01-13,248h,2,1
+HRG-1343,Story,펫 시스템 - 클라,v2.0,EPIC-778,SYSTEM,L,dev_ryu,internal,Done,2025-11-10,2025-11-12,2026-01-13,248h,3,1
+HRG-1344,Bug,펫 시스템 QA 반려 1차,v2.0,EPIC-778,SYSTEM,S,dev_nam,internal,Done,2026-01-09,2026-01-09,2026-01-12,,,0
+HRG-1345,Story,친구 시스템 - 기획,v2.0,EPIC-943,SYSTEM,M,pd_park,internal,Done,2025-10-30,2025-11-04,2025-11-26,104h,2,0
+HRG-1346,Task,친구 시스템 리소스,v2.0,EPIC-943,SYSTEM,M,art_outsource01,vendor,Done,2025-11-13,2025-11-20,2025-12-04,,,0
+HRG-1347,Story,친구 시스템 - 서버,v2.0,EPIC-943,SYSTEM,M,dev_nam,internal,Done,2025-11-27,2025-12-02,2026-01-13,176h,1,0
+HRG-1348,Story,월드보스 - 기획,v2.0,EPIC-304,CONTENT,L,pd_kim,internal,Done,2025-10-31,2025-11-04,2025-12-08,160h,13,0
+HRG-1349,Task,월드보스 리소스,v2.0,EPIC-304,CONTENT,L,art_outsource02,vendor,Done,2025-11-10,2025-11-17,2026-01-27,,,0
+HRG-1350,Story,월드보스 - 서버,v2.0,EPIC-304,CONTENT,M,dev_jung,internal,Done,2025-12-10,2025-12-16,2026-01-12,112h,2,0
+HRG-1351,Story,월드보스 - 클라,v2.0,EPIC-304,CONTENT,L,dev_ryu,internal,Done,2025-12-08,2025-12-16,2026-01-12,112h,2,0
+HRG-1352,Bug,월드보스 QA 반려 1차,v2.0,EPIC-304,CONTENT,S,dev_jung,internal,Done,2026-01-13,2026-01-13,2026-01-15,,,0
+HRG-1353,Bug,월드보스 QA 반려 2차,v2.0,EPIC-304,CONTENT,S,dev_han,internal,Done,2026-01-16,2026-01-16,2026-01-20,,,0
+HRG-1354,Story,업적 시스템 - 기획,v2.0,EPIC-397,SYSTEM,L,pd_lee,internal,Done,2025-10-15,2025-10-17,2025-11-19,152h,2,0
+HRG-1355,Task,업적 시스템 리소스,v2.0,EPIC-397,SYSTEM,L,art_outsource01,vendor,Done,2025-10-31,2025-11-07,2025-12-01,,,0
+HRG-1356,Story,업적 시스템 - 서버,v2.0,EPIC-397,SYSTEM,L,dev_nam,internal,Done,2025-11-20,2025-11-27,2026-01-07,176h,5,0
+HRG-1357,Story,업적 시스템 - 클라,v2.0,EPIC-397,SYSTEM,L,dev_ryu,internal,Done,2025-11-25,2025-11-27,2026-01-07,176h,1,0
+HRG-1358,Bug,업적 시스템 QA 반려 1차,v2.0,EPIC-397,SYSTEM,M,dev_jung,internal,Done,2026-01-08,2026-01-08,2026-01-12,,,0
+HRG-1359,Story,레이드 추가 - 기획,v2.0,EPIC-369,CONTENT,S,pd_choi,internal,Done,2025-12-16,2025-12-22,2025-12-30,32h,13,0
+HRG-1360,Task,레이드 추가 리소스,v2.0,EPIC-369,CONTENT,S,art_outsource01,vendor,Done,2025-12-17,2025-12-24,2026-01-05,,,0
+HRG-1361,Story,레이드 추가 - 서버,v2.0,EPIC-369,CONTENT,S,dev_oh,internal,Done,2025-12-26,2026-01-05,2026-01-15,48h,1,0
+HRG-1362,Bug,레이드 추가 QA 반려 1차,v2.0,EPIC-369,CONTENT,S,dev_nam,internal,Done,2026-01-16,2026-01-16,2026-01-21,,,0
+HRG-1363,Story,출석 이벤트 - 기획,v2.0,EPIC-682,CONTENT,L,pd_choi,internal,Done,2025-10-28,2025-10-31,2025-11-28,136h,21,0
+HRG-1364,Task,출석 이벤트 리소스,v2.0,EPIC-682,CONTENT,L,art_outsource02,vendor,Done,2025-10-24,2025-10-31,2025-12-26,,,0
+HRG-1365,Story,출석 이벤트 - 서버,v2.0,EPIC-682,CONTENT,L,dev_jung,internal,Done,2025-12-05,2025-12-09,2026-01-14,136h,5,1
+HRG-1366,Story,출석 이벤트 - 클라,v2.0,EPIC-682,CONTENT,L,dev_seo,internal,Done,2025-12-01,2025-12-09,2026-01-09,136h,3,0
+HRG-1367,Story,장비 각성 - 기획,v2.0,EPIC-494,SYSTEM,M,pd_park,internal,Done,2025-11-12,2025-11-18,2025-12-05,88h,13,0
+HRG-1368,Task,장비 각성 리소스,v2.0,EPIC-494,SYSTEM,M,art_outsource02,vendor,Done,2025-11-24,2025-12-01,2025-12-15,,,0
+HRG-1369,Story,장비 각성 - 서버,v2.0,EPIC-494,SYSTEM,M,dev_nam,internal,Done,2025-12-05,2025-12-11,2026-01-14,144h,13,0
+HRG-1370,Bug,장비 각성 QA 반려 1차,v2.0,EPIC-494,SYSTEM,S,dev_nam,internal,Done,2026-01-15,2026-01-15,2026-01-20,,,0
+HRG-1371,Bug,장비 각성 QA 반려 2차,v2.0,EPIC-494,SYSTEM,S,dev_han,internal,Done,2026-01-20,2026-01-20,2026-01-23,,,0
+HRG-1372,Story,던전 확장 - 기획,v2.0,EPIC-692,CONTENT,L,pd_park,internal,Done,2025-11-06,2025-11-11,2025-12-05,120h,3,0
+HRG-1373,Task,던전 확장 리소스,v2.0,EPIC-692,CONTENT,L,art_outsource02,vendor,Done,2025-11-14,2025-11-21,2026-01-21,,,0
+HRG-1374,Story,던전 확장 - 서버,v2.0,EPIC-692,CONTENT,L,dev_oh,internal,Done,2025-12-15,2025-12-17,2026-01-12,104h,1,0
+HRG-1375,Story,던전 확장 - 클라,v2.0,EPIC-692,CONTENT,L,dev_ryu,internal,Done,2025-12-10,2025-12-17,2026-01-12,104h,21,0
+HRG-1376,Bug,던전 확장 QA 반려 1차,v2.0,EPIC-692,CONTENT,S,dev_jung,internal,Done,2026-01-13,2026-01-13,2026-01-15,,,0
+HRG-1377,Story,UI 개선,v2.0,,CONTENT,S,art_yoon,internal,Done,2025-12-10,2025-12-12,2025-12-19,32h,1,0
+HRG-1378,Story,텍스트 수정,v2.0,,SYSTEM,S,dev_ryu,internal,Done,2025-12-15,2025-12-17,2025-12-30,56h,5,0
+HRG-1379,Story,버그 수정 묶음,v2.0,,CONTENT,S,art_shin,internal,Done,2025-12-11,2025-12-15,2025-12-22,32h,3,0
+HRG-1380,Story,버그 수정 묶음,v2.0,,CONTENT,S,art_shin,internal,Done,2025-12-15,2025-12-17,2025-12-24,32h,5,0
+HRG-1381,Story,텍스트 수정,v2.0,,CONTENT,S,dev_nam,internal,Won't Do,2026-01-05,2026-01-07,2026-01-14,32h,3,0
+HRG-1382,Story,편의성 개선,v2.0,,CONTENT,S,dev_nam,internal,Done,2025-12-15,2025-12-17,2025-12-24,32h,3,0
+HRG-1383,Story,UI 개선,v2.0,,SYSTEM,S,dev_seo,internal,Done,2025-12-16,2025-12-18,2025-12-31,56h,1,0
+HRG-1384,Story,버그 수정 묶음,v2.0,,CONTENT,S,dev_jung,internal,Done,2025-12-12,2025-12-16,2025-12-23,32h,1,0
+HRG-1385,Story,패스 상품 - 기획,v2.1,EPIC-710,CONTENT,L,,internal,To Do,2025-12-15,,,128h,1,0
+HRG-1386,Story,장비 각성 - 기획,v2.1,EPIC-880,SYSTEM,M,pd_lee,internal,In Progress,2025-12-22,2025-12-24,,80h,8,0
+HRG-1387,Story,강화 시스템 - 기획,v2.1,EPIC-726,SYSTEM,M,,internal,To Do,2025-12-23,,,96h,8,0
+HRG-1388,Story,시즌 이벤트 - 기획,v2.1,EPIC-374,CONTENT,S,,internal,To Do,2026-02-13,,,32h,2,0
+HRG-1389,Story,월드보스 - 기획,v2.1,EPIC-715,CONTENT,M,pd_choi,internal,In Progress,2026-01-09,2026-01-13,,64h,1,0
+HRG-1390,Story,매칭 로직 - 기획,v2.1,EPIC-967,SYSTEM,L,,internal,To Do,2025-11-10,,,240h,5,0
+HRG-1391,Story,밸런스 조정,v2.1,,CONTENT,M,dev_han,internal,Done,2026-01-21,2026-01-23,2026-02-11,88h,1,0
+HRG-1392,Story,편의성 개선,v2.1,,SYSTEM,S,dev_oh,internal,Done,2026-02-13,2026-02-20,2026-03-05,56h,5,0
+HRG-1393,Story,텍스트 수정,v2.1,,CONTENT,S,art_shin,internal,Done,2026-02-19,2026-02-23,2026-03-03,32h,2,0
+HRG-1394,Story,UI 개선,v2.1,,SYSTEM,S,dev_han,internal,Done,2026-02-09,2026-02-11,2026-02-26,56h,5,0
+HRG-1395,Story,편의성 개선,v2.1,,SYSTEM,S,dev_oh,internal,Done,2026-02-05,2026-02-09,2026-02-24,56h,3,0
+HRG-1396,Story,텍스트 수정,v2.1,,SYSTEM,S,dev_oh,internal,Done,2026-02-05,2026-02-09,2026-02-24,56h,3,0
