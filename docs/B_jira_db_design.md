@@ -215,32 +215,31 @@ MD 계산과 이후 일정 분석에 사용할 수 있도록 필요한 값을 �
 | `id` | `issue.jira_issue_id` | TEXT | 문자열 그대로 저장 | 적재 오류 처리 | 낮음. Jira 내부 식별자로 사용 |
 | `key` | `issue.issue_key` | TEXT | 그대로 저장 | 적재 오류 처리 | 낮음. 프로젝트 Key 변경 시 영향 가능 |
 | `fields.summary` | `issue.summary` | TEXT | 그대로 저장 | NULL 허용 | 낮음 |
-| `fields.issuetype.name` | `issue.issue_type` | TEXT | 그대로 저장 | NULL이면 `UNKNOWN` | 이슈 유형 추가/이름 변경 시 영향 |
-| `fields.status.id` | `issue.status_id` | TEXT | 그대로 저장 | NULL이면 적재 오류 처리 | Workflow 변경 시 새 Status ID 확인 필요 |
-| `fields.status.name` | `issue.status_name` | TEXT | 원본 표시값 그대로 저장 | NULL 허용 | 상태명 변경 및 한/영문 변경 영향 |
-| `fields.status.statusCategory.key` | `issue.status_category` | TEXT | 소문자로 통일 | NULL이면 `UNKNOWN` | 비교적 낮음 |
-| `fields.assignee.accountId` | `issue.assignee_account_id` | TEXT | accountId만 추출 | 미지정 이슈는 NULL | 계정 변경/퇴사 시 인력 매핑 영향 |
+| `fields.issuetype.name` | `issue.issue_type` | TEXT | 그대로 저장 | NULL 허용 및 오류 기록 | 이슈 유형 추가/이름 변경 시 영향 |
+| `fields.status.name` | `issue.status` | TEXT | 상태 표시값 저장 | NULL이면 오류 기록 | Workflow 상태명 변경 시 영향 |
+| `fields.assignee.accountId` | `person.jira_account_id` → `issue.assignee_person_key` | TEXT | accountId로 `person`을 조회해 내부 `person_key`로 변환 | 미지정은 NULL. 매핑 실패는 오류 기록 | 계정 변경/퇴사/인력 Mapping 변경 시 영향 |
 | `fields.created` | `issue.created_at` | TIMESTAMP | UTC 기준으로 변환 | 적재 오류 처리 | 낮음 |
-| `fields.updated` | `issue.updated_at` | TIMESTAMP | UTC 기준으로 변환 | 적재 오류 처리 | 낮음. 향후 증분 적재 기준으로 사용 가능 |
-| `fields.resolutiondate` | `issue.resolution_at` | TIMESTAMP | UTC 기준으로 변환 | 미완료 또는 값이 없으면 NULL | Workflow의 Resolution 사용 방식에 영향 |
-| `fields.timetracking.originalEstimateSeconds` | `issue.original_estimate_seconds` | INTEGER | 초 단위 그대로 저장 | 입력되지 않았으면 NULL | 낮음. MD 계산 시 문자열보다 안정적 |
-| Size에 해당하는 Custom Field | `issue.size_label` | TEXT | Field Metadata로 해당 필드를 찾은 뒤 S/M/L 추출 | NULL 유지 | 높음. Custom Field ID 변경 가능 |
-| Category에 해당하는 Custom Field | `issue.category_type` | TEXT | `시스템`/`SYSTEM` → `SYSTEM`, `콘텐츠`/`CONTENT` → `CONTENT`으로 통일 | NULL이면 `UNKNOWN` | 높음. Custom Field ID/선택지 변경 가능 |
-| Story Point에 해당하는 Custom Field | `issue.story_points` | REAL | Field Metadata로 해당 필드 식별 후 숫자로 변환 | NULL 유지 | 높음. Custom Field ID 변경 가능 |
-| `fields.parent.key` | `issue.parent_key` | TEXT | parent의 key만 추출 | parent가 없으면 NULL | Jira 계층 구조 변경 시 영향 |
-| `fields.fixVersions[].id` | `issue_version.version_id` | TEXT | 배열의 각 Version을 별도 행으로 분리 | Version이 없으면 관계행 생성 안 함 | 낮음 |
-| `fields.fixVersions[].name` | `issue_version.version_name` | TEXT | 그대로 저장 | NULL 허용 | Version 이름 변경 시 영향 |
-| `fields.fixVersions[].released` | `issue_version.released` | BOOLEAN | boolean으로 저장 | NULL이면 false로 추정하지 않고 NULL | Jira Version 운영 규칙 변경 시 영향 |
-| `fields.fixVersions[].releaseDate` | `issue_version.release_date` | DATE | 날짜 형식으로 변환 | 없으면 NULL | 낮음 |
+| `fields.resolutiondate` | `issue.resolved_at` | TIMESTAMP | UTC 기준으로 변환 | 미완료 또는 값이 없으면 NULL | Workflow의 Resolution 사용 방식에 영향 |
+| `fields.timetracking.originalEstimateSeconds` | `issue.original_estimate_seconds` | INTEGER | 초 단위 그대로 저장 | 입력되지 않았으면 NULL | 낮음 |
+| Size에 해당하는 Custom Field | `issue.size_label_raw` | TEXT | Field Metadata로 Size 필드를 찾은 뒤 S/M/L 값 추출 | NULL 유지, 집계 시 별도 확인 | 높음. Custom Field ID/형식 변경 가능 |
+| Category에 해당하는 Custom Field | `issue.category_type` | TEXT | `시스템`/`SYSTEM` → `SYSTEM`, `콘텐츠`/`CONTENT` → `CONTENT` | 매핑할 수 없으면 계산 중단 및 오류 기록 | 높음. Custom Field ID/선택지 변경 가능 |
+| Story Point에 해당하는 Custom Field | `issue.story_points` | REAL | Field Metadata로 필드 식별 후 숫자로 변환 | NULL 유지 | 높음. Custom Field ID 변경 가능 |
+| `fields.parent.key` | `issue.parent_key` | TEXT | parent key만 추출 | parent가 없으면 NULL | Jira 계층 구조 변경 시 영향 |
+| `fields.fixVersions[].id` | `version.jira_version_id` | TEXT | Version ID 저장 | 없으면 NULL | 낮음 |
+| `fields.fixVersions[].name` | `version.version_name`, `issue_version.version_name` | TEXT | Version을 별도 행으로 저장하고 Issue-Version 관계 생성 | Version이 없으면 관계행 생성 안 함 | Version 이름 변경 시 영향 |
 | `fields.worklog.worklogs[].id` | `worklog.worklog_id` | TEXT | Worklog별 별도 행 생성 | 적재 오류 처리 | 낮음 |
-| `fields.worklog.worklogs[].author.accountId` | `worklog.author_account_id` | TEXT | accountId 추출 | 없으면 `UNCLASSIFIED` 처리 | 인력 매핑 정보 변경 시 영향 |
+| `fields.worklog.worklogs[].author.accountId` | `person.jira_account_id` → `worklog.author_person_key` | TEXT | accountId로 `person_key`를 찾아 저장 | Mapping 실패 시 특정 공정에 귀속하지 않고 오류 기록 | 인력 Mapping 변경 시 영향 |
 | `fields.worklog.worklogs[].started` | `worklog.started_at` | TIMESTAMP | UTC 기준으로 변환 | 없으면 해당 Worklog 적재 오류 처리 | 낮음 |
-| `fields.worklog.worklogs[].timeSpentSeconds` | `worklog.time_spent_seconds` | INTEGER | 초 단위 그대로 저장 | 없으면 해당 Worklog는 MD 계산에서 제외하고 오류 기록 | Actual MD 계산 핵심 값 |
-| `changelog.histories[].id` | `change_event.history_id` | TEXT | 이력별 식별자 저장 | 적재 오류 처리 | 낮음 |
-| `changelog.histories[].created` | `change_event.changed_at` | TIMESTAMP | UTC 기준으로 변환 | 적재 오류 처리 | 낮음 |
-| `changelog.histories[].items[].field` | `change_event.field_name` | TEXT | 원본 값 보존 | NULL이면 적재 오류 처리 | Jira 표시명 변경 가능 |
-| `fromString` | `change_event.from_value` | TEXT | 원본 문자열 저장 | 변경 전 값이 없으면 NULL | Status 이름 변경 영향 |
-| `toString` | `change_event.to_value` | TEXT | 원본 문자열 저장 | 변경 후 값이 없으면 NULL | Status 이름 변경 영향 |
+| `fields.worklog.worklogs[].timeSpentSeconds` | `worklog.time_spent_seconds` | INTEGER | 초 단위 그대로 저장 | 없으면 해당 Worklog를 MD 계산에서 제외하고 오류 기록 | Actual MD 계산 핵심 값 |
+| `changelog.histories[].id` | `issue_status_history.history_id` | TEXT | 상태 변경 이력 ID 저장 | 적재 오류 처리 | 낮음 |
+| `changelog.histories[].created` | `issue_status_history.changed_at` | TIMESTAMP | UTC 기준으로 변환 | 적재 오류 처리 | 낮음 |
+| Status 변경의 `fromString` | `issue_status_history.from_status` | TEXT | Status 변경 항목만 추출하여 저장 | 최초 상태 등 값이 없으면 NULL | 상태명 변경 영향 |
+| Status 변경의 `toString` | `issue_status_history.to_status` | TEXT | Status 변경 항목만 추출하여 저장 | 없으면 오류 기록 | 상태명 변경 영향 |
+
+`fields.updated`는 Jira 증분 동기화 시 변경된 Issue를 조회하는 기준으로 사용하지만,
+현재 B-6의 정제 테이블에는 별도로 저장하지 않는다.
+동기화 완료 시각인 watermark와 함께 B-4의 수집 단계에서 관리한다.
+
 
 #### 시간 값 처리
 
@@ -262,7 +261,27 @@ A-2에서 `8시간 = 1 MD`로 정의했으므로,
 
 `Actual MD = SUM(worklog.time_spent_seconds) / 28,800`
 
-문자열 형태의 시간 값은 원본 확인용으로만 보존한다.
+문자열 형태의 시간 값은 Raw 데이터에서 확인용으로 보존한다.
+
+
+#### Size 처리
+
+Jira에서 입력된 기존 Size는 `issue.size_label_raw`에 원본 값으로 보존한다.
+
+다만 A-2에서는 기존 Size를 그대로 사용하는 것이 아니라
+`orig_estimate`와 공정별 기준을 이용해 객관적인 S / M / L을 다시 계산하기로 하였다.
+
+따라서 `issue.size_class`는 Jira 원본 필드와 직접 매핑되는 값이 아니라
+정제 단계에서 A-2의 Size 규칙을 적용하여 생성하는 파생값이다.
+
+즉,
+
+`Jira Size → size_label_raw`
+
+`A-2 Size 계산 → size_class`
+
+로 구분한다.
+
 
 #### Worklog 처리
 
@@ -275,26 +294,37 @@ DB에서는 Worklog 한 건을 한 행으로 분리한다.
 - 시작 시각: `started`
 - 작업시간: `timeSpentSeconds`
 
+작성자의 `accountId`는 `person.jira_account_id`와 연결하여
+내부 `person_key`를 찾은 뒤 `worklog.author_person_key`에 저장한다.
+
 따라서 Actual MD는 Issue 전체의 `timeSpentSeconds`가 아니라
 개별 Worklog를 합산하여 계산한다.
 
 이 방식으로 저장해야 A-2에서 정의한 것처럼
 Worklog 작성자의 직군에 따라 PLAN / DEV / ART MD를 구분할 수 있다.
 
+
 #### Fix Version 처리
 
 `fixVersions`는 배열이므로 하나의 문자열 컬럼에 넣지 않고,
-Issue와 Version의 관계를 별도의 행으로 저장한다.
+Version 정보와 Issue-Version 관계를 분리하여 저장한다.
 
 예를 들어 HRG-1032는 `v1.8`, `v1.9` 두 Version을 동시에 가지고 있으므로
-다음과 같이 저장한다.
+개념적으로 다음과 같이 저장한다.
 
-| issue_key | version_id | version_name |
-|---|---|---|
-| HRG-1032 | 10041 | v1.8 |
-| HRG-1032 | 10042 | v1.9 |
+| issue_key | version_name |
+|---|---|
+| HRG-1032 | v1.8 |
+| HRG-1032 | v1.9 |
+
+Version 자체의 ID와 이름은 `version` 테이블에 저장하고,
+Issue와 Version의 관계는 `issue_version` 테이블에 저장한다.
 
 실제 Version별 MD 귀속 시에는 A-1에서 정한 복수 Version 처리 규칙을 적용한다.
+
+현재 제공 CSV만으로 귀속을 확정할 수 없는 복수 Version Issue는
+`include_in_md = 0`으로 두어 Version별 Actual MD 집계에서 제외한다.
+
 
 #### Custom Field 처리
 
@@ -315,11 +345,11 @@ HRG-0914에는
 따라서 특정 ID가 항상 Size나 Story Point라고 코드에 직접 작성하지 않는다.
 
 Jira의 `/rest/api/3/field`에서 Field Metadata를 별도로 조회하고,
-다음과 같은 Field Mapping을 관리한다.
+`jira_field_map`에 다음과 같은 의미 기반 Mapping을 관리한다.
 
 | semantic_key | jira_field_id | 의미 |
 |---|---|---|
-| `size_label` | Metadata 조회 결과 | S / M / L |
+| `size_label` | Metadata 조회 결과 | Jira에 입력된 S / M / L |
 | `category_type` | Metadata 조회 결과 | SYSTEM / CONTENT |
 | `story_points` | Metadata 조회 결과 | Story Point |
 | `epic_link` | Metadata 조회 결과 | 상위 작업 연결 |
@@ -328,11 +358,14 @@ ETL 코드는 `customfield_10031` 같은 Jira ID가 아니라
 `size_label`, `category_type` 같은 내부 의미 이름을 기준으로 동작한다.
 
 예를 들어 Jira 관리자가 Size 필드의 ID를 변경하더라도
-Field Mapping만 갱신하면 MD 계산 로직 자체는 수정하지 않는다.
+`jira_field_map`만 갱신하면 MD 계산 로직 자체는 수정하지 않는다.
 
-Field Metadata에서 해당 필드를 찾을 수 없거나
-예상한 데이터 타입과 다른 경우에는 임의로 NULL 처리하여 계속 계산하지 않고,
-Mapping 오류로 표시하여 확인 후 적재하도록 한다.
+Field Metadata에서 필요한 필드를 찾을 수 없거나
+예상한 데이터 타입과 다른 경우에는 임의로 NULL 또는 기본값으로 변환하여
+계산을 계속하지 않는다.
+
+Mapping 오류로 기록하고,
+영향받는 정제 및 MD 계산을 중단한 뒤 Mapping을 확인하도록 한다.
 
 ### B-3. "언제부터 언제까지 일했는지" 알아내기
 
@@ -711,6 +744,11 @@ DB 적재에는 `scripts/b7_load_sqlite.py`를 사용하였으며,
 - 복수 Fix Version 이슈는 Version별 MD 중복 집계를 방지하기 위해 집계 대상에서 제외
 - 제공 CSV에는 Worklog ID가 없으므로 적재 테스트용 고유 ID 생성
 - `started`, `resolved`는 제공 CSV에 정리된 값을 사용
+- Jira에 기존 입력된 `size_label`은 `size_label_raw`로 보존
+- Actual MD 집계에 사용할 `size_class`는 A-2에서 정의한
+  `Category × Process × orig_estimate` 기준으로 다시 계산
+- A-2의 Size 계산에 필요한 `orig_estimate` 또는 공정 정보가 부족한 경우
+  기존 `size_label`로 임의 보정하지 않고 `UNCLASSIFIED`로 관리
 
 실제 Jira API 연동 시에는 Jira가 제공하는 Worklog ID와
 Changelog를 이용하여 동일한 구조로 적재한다.
@@ -727,21 +765,41 @@ Worklog 작업시간을 합산한 뒤 다음과 같이 계산한다.
 
 `Actual MD = SUM(time_spent_seconds) / 28,800`
 
-Issue에 Fix Version이 두 개 이상 지정되어
-Version 귀속이 명확하지 않은 경우에는 중복 집계를 방지하기 위해
+Size는 Jira에 기존 입력된 주관적 `size_label`을 그대로 사용하지 않는다.
+
+DB 적재 단계에서 A-2에서 정의한
+`Category × Process × orig_estimate` 기준을 적용하여
+`size_class`를 다시 계산한 뒤 집계에 사용한다.
+
+Size 계산에 필요한 `orig_estimate`가 없거나,
+담당자 정보 부족으로 적용할 공정별 Size 기준을 결정할 수 없는 경우에는
+해당 Issue를 `UNCLASSIFIED`로 구분한다.
+
+이 경우에도 실제 Worklog 자체는 존재할 수 있으므로
+Actual MD 합계에서 제외하지 않고 별도 Size 그룹으로 표시한다.
+
+또한 Issue에 Fix Version이 두 개 이상 지정되어
+Version 귀속이 명확하지 않은 경우에는
+동일 Worklog가 여러 Version에 중복 집계되는 것을 방지하기 위해
 Version별 Actual MD 집계에서 제외한다.
 
 실행 예시 중 v1.9 결과는 다음과 같다.
 
 | Version | Category | Size | Actual MD |
-|---|---|---:|---:|
-| v1.9 | CONTENT | M | 14.500 |
-| v1.9 | CONTENT | S | 29.775 |
-| v1.9 | SYSTEM | L | 111.175 |
-| v1.9 | SYSTEM | M | 2.125 |
-| v1.9 | SYSTEM | S | 6.425 |
+|---|---|---|---:|
+| v1.9 | CONTENT | M | 19.750 |
+| v1.9 | CONTENT | S | 9.650 |
+| v1.9 | CONTENT | UNCLASSIFIED | 14.875 |
+| v1.9 | SYSTEM | L | 53.375 |
+| v1.9 | SYSTEM | M | 30.500 |
+| v1.9 | SYSTEM | S | 6.050 |
+| v1.9 | SYSTEM | UNCLASSIFIED | 29.800 |
 
 v1.9의 기록된 Actual MD 합계는 `164.0 MD`이다.
+
+Size 재분류 전후에 총 Actual MD가 동일한 이유는
+Worklog를 제외한 것이 아니라
+동일한 Worklog를 A-2의 Size 기준에 따라 다시 분류했기 때문이다.
 
 실제 SQLite 실행 화면은 아래와 같다.
 
@@ -791,6 +849,13 @@ v1.9의 기록된 Actual MD 합계는 `164.0 MD`이다.
 실제 작업 가능 공수를 계산하는 이후 일정 역산 단계에서는
 별도로 공휴일, PTO, availability를 반영한다.
 
+제공 CSV에는 기간별 Assignee 변경 이력이 포함되어 있지 않으므로,
+본 실행 예시는 현재 `assignee`를 해당 Issue의 작업기간 전체에 적용하였다.
+
+실제 Jira API 연동 시에는 Assignee 변경 Changelog를 이용하여
+담당자별 실제 담당 구간을 구성한 뒤
+동일한 방식으로 동시 담당 Issue 수를 계산한다.
+
 실제 SQLite 실행 화면은 아래와 같다.
 
 ![담당자 동시 담당 Issue 수 실행 결과](images/b7_concurrent_issues.png)
@@ -801,24 +866,85 @@ v1.9의 기록된 Actual MD 합계는 `164.0 MD`이다.
 
 기존 baseline 값을 직접 덮어쓰지 않는다.
 
-Jira Version이 Close되면 해당 Version에서 측정된 Actual MD를
-`Category × Size × 공정` 단위로 저장하고,
-어떤 Version의 실적으로 계산된 값인지 함께 남긴다.
+Jira Version이 Close되면 해당 Version의 Actual MD를
+`Category × Size × Process` 단위로 계산하여 Version별 실적으로 남긴다.
 
-현재 기준표는 이 이력 중 **가장 최근에 승인된 baseline**을 사용한다.
+다만 Version 전체의 총 MD를 그대로 baseline 값으로 사용하지 않는다.
 
-이렇게 하면 기준이 변경된 과정과 이전 값을 추적할 수 있고,
-잘못된 갱신이 발생했을 때 이전 기준으로 되돌릴 수도 있다.
+Version마다 해당 Category / Size의 Issue 수가 다르기 때문에
+총 MD를 그대로 비교하면 실제 Issue당 작업량이 같더라도
+Issue가 많았던 Version의 값이 더 크게 나타날 수 있기 때문이다.
+
+따라서 baseline 갱신에 사용할 Version별 실적은
+**관측 가능한 Issue 1건당 Actual MD**로 계산한다.
+
+계산 순서는 다음과 같다.
+
+1. Worklog를 `Issue × Process` 단위로 합산한다.
+2. 각 Issue의 Actual MD를 계산한다.
+3. `Category × Size × Process`별로 관측된 Issue의 평균 Actual MD를 계산한다.
+4. 해당 값을 그 Version의 baseline 후보 실적으로 저장한다.
+
+예를 들어 한 Version의 `SYSTEM × L × DEV`에
+Worklog가 존재하는 Issue가 4건이고,
+DEV Actual MD가 각각
+
+`8 / 10 / 9 / 13 MD`
+
+였다면 해당 Version의 실적은
+
+`(8 + 10 + 9 + 13) / 4 = 10 MD`
+
+로 계산한다.
+
+즉 baseline은
+
+`SYSTEM × L × DEV = Issue 1건당 약 몇 MD가 필요한가`
+
+를 의미하도록 관리한다.
+
+현재 기준표는 Version별 실적 이력으로부터 계산된
+**가장 최근 승인 baseline**을 사용한다.
 
 
-#### 2. 최근 3개 종료 Version의 중앙값을 baseline 후보로 사용한다
+#### 2. Worklog가 없는 Issue와 UNCLASSIFIED는 임의 보정하지 않는다
+
+A-3에서 정의한 것처럼
+Worklog가 없는 Issue의 실제 작업량은 알 수 없으므로
+이를 `0 MD`로 간주하여 평균에 포함하지 않는다.
+
+따라서 Version별 Issue당 Actual MD 계산에는
+해당 Process의 실제 Worklog가 존재하는 Issue만 사용한다.
+
+예를 들어 `SYSTEM × L × DEV` Issue가 5건이지만
+DEV Worklog가 존재하는 Issue가 3건이라면,
+
+분모를 5건으로 사용하지 않고
+실제 Actual MD를 관측할 수 있는 3건만 사용한다.
+
+Worklog가 없는 나머지 2건은
+Actual MD가 0인 것이 아니라 `UNKNOWN`으로 유지한다.
+
+또한 B-7에서 A-2의 Size 기준을 적용할 수 없어
+`UNCLASSIFIED`로 분류된 Issue도
+S / M / L baseline 갱신에는 사용하지 않는다.
+
+`UNCLASSIFIED`의 Worklog 자체는 Actual MD 총합에서 제외하지 않지만,
+어느 Size 기준을 갱신해야 하는지 결정할 수 없기 때문에
+별도의 데이터 품질 지표로 관리한다.
+
+
+#### 3. 최근 3개 종료 Version의 중앙값을 baseline 후보로 사용한다
 
 한 Version의 특이한 결과가 기준표를 크게 바꾸는 것을 막기 위해
 가장 최근의 유효한 종료 Version 3개의 실적을 사용한다.
 
+각 Version에서 먼저 계산한
+`Category × Size × Process별 Issue당 Actual MD`를 대상으로
 평균이 아니라 **중앙값(Median)** 을 사용한다.
 
-예를 들어 최근 세 Version의 DEV MD가
+예를 들어 최근 세 종료 Version의
+`SYSTEM × L × DEV` Issue당 Actual MD가
 
 `8 MD / 9 MD / 25 MD`
 
@@ -832,45 +958,63 @@ Jira Version이 Close되면 해당 Version에서 측정된 Actual MD를
 따라서 한 Version에서 일시적으로 공수가 크게 증가하더라도
 baseline 전체가 해당 값에 끌려가는 것을 줄일 수 있다.
 
-3개 Version을 사용하는 것은 최근 작업 방식을 반영하면서도
-한 Version의 이상값이 기준을 결정하지 않도록 하기 위한 초기 운영 기준이다.
+3개 Version을 사용하는 것은
+최근 작업 방식을 반영하면서도
+한 Version의 특이값이 기준 전체를 결정하지 않도록 하기 위한
+초기 운영 기준이다.
 
-Worklog가 없는 이슈의 MD를 임의로 추정해서 넣지는 않으며,
-A-3에서 정한 것처럼 실제 관측된 Worklog만 Actual MD 계산에 사용한다.
+여기서 유효한 Version은 다음 조건을 만족해야 한다.
+
+- Jira Version Close가 완료됨
+- B-10의 데이터 검증을 통과함
+- 해당 `Category × Size × Process`에서 실제 Worklog를 관측할 수 있음
+
+해당 조합의 실적이 없는 Version을
+임의의 `0 MD`로 넣지는 않는다.
 
 
-#### 3. 큰 변화는 자동 반영하지 않고 사람이 승인한다
+#### 4. baseline 후보는 자동 계산하되 사람이 승인한다
 
 Version Close 후 새로운 baseline 후보값까지는 자동으로 계산한다.
 
 다만 실제 baseline 반영은 **파트 리더 승인 후** 진행한다.
 
-승인자는 다음 정보를 확인한다.
+승인자는 다음 정보를 함께 확인한다.
 
-- 기존 baseline
+- 기존 승인 baseline
 - 새 baseline 후보
-- 최근 3개 Version의 Actual MD
+- 최근 Version별 Issue당 Actual MD
 - 계산에 사용된 Issue 수
 - Worklog 기록률
+- UNCLASSIFIED Issue 및 Actual MD 존재 여부
+
+Issue 수와 Worklog 기록률을 함께 보여주는 이유는
+동일한 후보값이라도 실제 관측 데이터가 적거나
+Worklog 누락이 많은 경우 신뢰도가 낮을 수 있기 때문이다.
 
 특히 새 후보값이 기존 승인 baseline보다
-**50% 이상 증가하거나 감소한 경우**에는 큰 변화로 표시하여
-반드시 원인을 확인하도록 한다.
+**50% 이상 증가하거나 감소한 경우**에는
+큰 변화로 표시하여 원인을 확인한다.
 
-50%는 통계적으로 확정된 이상치 기준이 아니라,
-초기 운영 단계에서 명백하게 큰 변화만 별도 검토하기 위한 안전장치이다.
+50%는 데이터에서 통계적으로 도출된 이상치 기준이 아니라,
+초기 운영 단계에서 큰 변화를 별도로 확인하기 위한
+운영상의 안전장치이다.
 
-정상적인 변화라고 판단되면 승인하고,
-데이터 누락이나 일회성 특이사항 때문이라면 기존 baseline을 유지한다.
+변화가 실제 업무 방식의 변화라고 판단되면 승인하고,
+Worklog 누락이나 일회성 특이사항 때문이라면
+기존 baseline을 유지한다.
 
 QA는 A-2에서 실제 QA MD를 직접 측정할 수 없다고 판단했으므로
 현재 proxy 값을 실제 QA MD처럼 자동 갱신하지 않는다.
-실제 QA Worklog가 확보되기 전까지는 별도로 관리한다.
+
+실제 QA 담당자의 Worklog를 확보하기 전까지는
+QA baseline을 별도로 관리한다.
 
 
-#### 4. 이미 통지한 일정은 자동으로 덮어쓰지 않는다
+#### 5. 이미 통지한 일정은 자동으로 덮어쓰지 않는다
 
-baseline이 변경되면 새로운 기준으로 이후 일정을 다시 계산한다.
+승인된 baseline이 변경되면
+새로운 기준으로 이후 일정을 다시 계산한다.
 
 이미 담당자에게 통지된 일정의 기획 착수일이 변경된다면
 기존 일정을 조용히 수정하지 않고 변경 알림을 다시 보낸다.
@@ -880,20 +1024,25 @@ baseline이 변경되면 새로운 기준으로 이후 일정을 다시 계산�
 - 기존 기획 착수일
 - 변경된 기획 착수일
 - 변경된 영업일 수
-- baseline 변경 Version
+- baseline 변경의 근거가 된 Version
 
-재계산 결과 일정이 변하지 않았다면 추가 알림은 보내지 않는다.
+재계산 결과 일정이 변하지 않았다면
+추가 알림은 보내지 않는다.
 
 
 #### 전체 흐름
 
 `Version Close`
 
-→ `Actual MD 계산`
+→ `B-10 데이터 검증`
 
-→ `버전별 실적 저장`
+→ `Issue × Process별 Actual MD 계산`
 
-→ `최근 3개 Version 중앙값으로 baseline 후보 계산`
+→ `Category × Size × Process별 Issue당 Actual MD 계산`
+
+→ `Version별 실적 저장`
+
+→ `최근 3개 유효 Version의 중앙값으로 baseline 후보 계산`
 
 → `파트 리더 검토 및 승인`
 
