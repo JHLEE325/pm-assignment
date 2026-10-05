@@ -2,21 +2,18 @@
 
 업데이트 일정 역산 자동화 시스템 설계 과제 저장소입니다.
 
-과제의 기준일은 `2026-01-26`입니다.
-
-## 진행 상태
-
-- 산출물 A: 완료
-- 산출물 B: 진행 예정
-- 산출물 C: 진행 예정
-- 산출물 D: 진행 예정
+- 과제 기준일: `2026-01-26`
+- 산출물 A~D 완료
+- 제공 데이터는 `data/source/`에 원본 그대로 보관
+- B-7 재현용 SQLite DB는 실행 시 생성되며 저장소에는 커밋하지 않음
 
 ## 폴더 구조
 
 ```text
-horang-pm-assignment/
+pm-assignment/
 ├── README.md
 ├── requirements.txt
+├── .gitignore
 ├── data/
 │   └── source/
 │       ├── 과제문서_호랑PM파트.html
@@ -28,24 +25,36 @@ horang-pm-assignment/
 │       ├── calendar.csv
 │       └── dashboard_mockup.html
 ├── docs/
-│   └── A_data_diagnosis.md
+│   ├── A_data_diagnosis.md
+│   ├── B_jira_db_design.md
+│   ├── C_dashboard.html
+│   ├── C_dashboard_explanation.md
+│   ├── D_operation.md
+│   └── images/
+│       ├── b7_version_md.png
+│       └── b7_concurrent_issues.png
 ├── scripts/
 │   ├── a_profile.py
-│   ├── a2_schedule.py
 │   ├── a2_size.py
+│   ├── a2_schedule.py
 │   ├── a3_worklog.py
-│   └── a4_version.py
+│   ├── a4_version.py
+│   └── b7_load_sqlite.py
 ├── sql/
-├── dashboard/
+│   ├── schema.sql
+│   ├── b7_version_md.sql
+│   └── b7_concurrent_issues.sql
 └── output/
     └── a_analysis/
+        └── a2_size_thresholds.csv
 ```
 
-`data/source/`에는 과제에서 제공된 원본 데이터를 보관합니다.
+`output/horang_pm.db`는 `scripts/b7_load_sqlite.py` 실행 시 생성됩니다.  
+`.gitignore`의 `*.db` 규칙으로 저장소에는 포함하지 않습니다.
 
 ## 실행 환경
 
-Python 3 기준입니다.
+Python 3과 SQLite CLI가 필요합니다.
 
 ```bash
 python -m venv .venv
@@ -56,70 +65,30 @@ pip install -r requirements.txt
 Windows PowerShell:
 
 ```powershell
+python -m venv .venv
 .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
-## 산출물 A
+SQLite CLI 설치 여부 확인:
 
-최종 분석 내용과 판단 근거:
+```bash
+sqlite3 --version
+```
+
+모든 명령은 저장소 루트에서 실행합니다.
+
+---
+
+## 산출물 A — 데이터 진단과 기준 정하기
+
+문서:
 
 ```text
 docs/A_data_diagnosis.md
 ```
 
-### A-1. 데이터 기본 진단
-
-사용 스크립트:
-
-```bash
-python scripts/a_profile.py
-```
-
-원본 데이터의 구조와 주요 결측 상태를 확인합니다.
-
-### A-2. S / M / L 기준 분석
-
-사용 스크립트:
-
-```bash
-python scripts/a2_size.py
-```
-
-`orig_estimate`를 이용해 공정 및 카테고리별 규모 기준을 분석합니다.
-
-### A-2. 안정적인 기획 일정 분석
-
-사용 스크립트:
-
-```bash
-python scripts/a2_schedule.py
-```
-
-기획 완료 후 개발 착수까지의 기간과 일정 Buffer 산정을 위한 데이터를 분석합니다.
-
-### A-3. Worklog 결측 분석
-
-사용 스크립트:
-
-```bash
-python scripts/a3_worklog.py
-```
-
-전체, 공정별, 이슈 유형별 Worklog 결측률을 계산합니다.
-
-### A-4. Version별 추세 분석
-
-사용 스크립트:
-
-```bash
-python scripts/a4_version.py
-```
-
-v1.3 ~ v2.0의 이슈 수, Worklog 기록률, recorded MD, 배포 지연 등을 비교합니다.
-
-## 재현 순서
-
-저장소 루트에서 아래 순서로 실행합니다.
+분석 재현:
 
 ```bash
 python scripts/a_profile.py
@@ -129,74 +98,71 @@ python scripts/a3_worklog.py
 python scripts/a4_version.py
 ```
 
-세부 분석 결과와 판단 근거는 `docs/A_data_diagnosis.md`를 참고합니다.
+주요 역할:
 
-## 산출물 B
+- `a_profile.py`: 제공 CSV 구조/결측/분포 확인
+- `a2_size.py`: `orig_estimate` 기반 Category × Process Size 경계 분석
+- `a2_schedule.py`: 기획 완료→개발 착수 간격과 일정 Buffer 분석
+- `a3_worklog.py`: Worklog 결측률 분석
+- `a4_version.py`: v1.3~v2.0 Version별 기록률/MD/배포 지연 분석
 
-산출물 B의 최종 설계 문서는 다음 파일에 정리되어 있습니다.
-
-`docs/B_jira_db_design.md`
-
-### 관련 파일
+`a2_size.py` 실행 결과는 다음 파일로도 저장됩니다.
 
 ```text
-docs/
-└── B_jira_db_design.md
-
-scripts/
-└── b7_load_sqlite.py
-
-sql/
-├── schema.sql
-├── b7_version_md.sql
-└── b7_concurrent_issues.sql
-
-output/
-└── horang_pm.db
+output/a_analysis/a2_size_thresholds.csv
 ```
 
-### SQLite DB 생성 및 데이터 적재
+---
 
-저장소 루트에서 다음 명령어를 실행합니다.
+## 산출물 B — Jira → DB 설계 및 핵심 조회
+
+설계 문서:
+
+```text
+docs/B_jira_db_design.md
+```
+
+DDL / 조회 SQL:
+
+```text
+sql/schema.sql
+sql/b7_version_md.sql
+sql/b7_concurrent_issues.sql
+```
+
+### 1. SQLite DB 생성 및 CSV 적재
 
 ```bash
 python scripts/b7_load_sqlite.py
 ```
 
-실행하면 B-6에서 정의한 테이블 구조를 생성하고,
-제공된 CSV 데이터를 적재한 SQLite DB가 생성됩니다.
+생성 파일:
 
 ```text
 output/horang_pm.db
 ```
 
-적재 과정에서 다음 데이터를 변환합니다.
+적재 과정에서 다음을 처리합니다.
 
-- Worklog의 `h`, `d` 단위를 초 단위로 통일
+- Worklog `h` / `d`를 초 단위로 통일 (`1d = 8h`)
 - 복수 Fix Version을 Issue-Version 관계로 분리
-- 복수 Fix Version 이슈는 Version별 MD 중복 집계를 방지하기 위해 집계 대상에서 제외
-- CSV에 Worklog ID가 없으므로 테스트용 고유 ID 생성
-- 제공 CSV의 `started`, `resolved` 값을 정제된 작업기간 값으로 사용
+- 귀속이 불명확한 복수 Version Issue는 Version별 MD 중복 방지를 위해 집계 제외
+- CSV에 없는 Worklog ID는 재현 가능한 테스트용 ID 생성
+- 기존 Jira `size_label`은 원본 보존
+- A-2 기준 `Category × Process × orig_estimate`로 `size_class` 재계산
+- Size를 계산할 수 없는 Issue는 `UNCLASSIFIED`로 유지
 
-### 핵심 조회 SQL
+정상 적재 시 제공 데이터 기준으로 Issue 333건, Worklog 1,311건이 적재됩니다.
 
-Version별 Category × Size Actual MD:
-
-```text
-sql/b7_version_md.sql
-```
-
-실행:
+### 2. Version별 Category × Size Actual MD
 
 ```bash
 sqlite3 -header -column output/horang_pm.db < sql/b7_version_md.sql
 ```
 
-특정 기간 담당자의 동시 담당 Issue 수:
+문서의 v1.9 예시 합계는 `164.0 MD`입니다.
 
-```text
-sql/b7_concurrent_issues.sql
-```
+### 3. 특정 기간 담당자의 동시 담당 Issue 수
 
 SQLite 실행:
 
@@ -204,7 +170,7 @@ SQLite 실행:
 sqlite3 output/horang_pm.db
 ```
 
-SQLite 콘솔에서 조회 조건을 설정한 뒤 실행합니다.
+SQLite 콘솔:
 
 ```text
 .headers on
@@ -216,21 +182,113 @@ SQLite 콘솔에서 조회 조건을 설정한 뒤 실행합니다.
 .parameter set :to_date "'2025-10-23'"
 
 .read sql/b7_concurrent_issues.sql
-```
-
-종료:
-
-```text
 .quit
 ```
 
-### 산출물 B 재현 순서
+예시 조건에서 최대 동시 담당 Issue는 `7건`입니다.
 
-```bash
-python scripts/b7_load_sqlite.py
-sqlite3 -header -column output/horang_pm.db < sql/b7_version_md.sql
+실제 실행 화면은 다음 파일에 포함되어 있습니다.
+
+```text
+docs/images/b7_version_md.png
+docs/images/b7_concurrent_issues.png
 ```
 
-동시 담당 Issue 조회는 위의 SQLite parameter 설정 방법을 사용합니다.
+---
 
-세부 설계와 판단 근거는 `docs/B_jira_db_design.md`를 참고합니다.
+## 산출물 C — 기획 착수일 역산 상황판
+
+HTML:
+
+```text
+docs/C_dashboard.html
+```
+
+설명 문서:
+
+```text
+docs/C_dashboard_explanation.md
+```
+
+별도 DB 연결 없이 제공 데이터와 A/B에서 정한 규칙을 정적 mock payload로 사용합니다.
+
+간단히 로컬 서버를 실행한 뒤 브라우저에서 확인할 수 있습니다.
+
+```bash
+python -m http.server 8000
+```
+
+브라우저:
+
+```text
+http://localhost:8000/docs/C_dashboard.html
+```
+
+기본 입력:
+
+```text
+업데이트일: 2026-03-12
+콘텐츠: 신규 클래스 추가 (SYSTEM / L)
+담당 기획자: pd_lee
+```
+
+기본 예시 결과:
+
+```text
+기획 착수 필요일: 2025-11-07
+기준일 대비: 54영업일 초과
+실효 가용률: 40%
+범위 축소 SYSTEM-L → SYSTEM-S 시 착수 필요일: 2026-02-06
+범위/담당 유지 시 최소 업데이트일: 2026-05-28
+```
+
+화면 계산에는 주말, 공휴일, PTO, availability, 동시 담당 Issue 수를 반영합니다.
+
+---
+
+## 산출물 D — 운영 설계
+
+문서:
+
+```text
+docs/D_operation.md
+```
+
+포함 내용:
+
+- 파트 리더 / 담당 기획자 Slack 알림 문안
+- 기계적 계산과 AI 사용 영역 구분
+- 월 AI 사용량·비용 추정 및 비용 절감 방안
+- AI 사용 기록과 잘못 판단한 지점 3건의 수정 과정
+
+---
+
+## 전체 재현 순서
+
+```bash
+# 1. Python 환경
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. 산출물 A 분석
+python scripts/a_profile.py
+python scripts/a2_size.py
+python scripts/a2_schedule.py
+python scripts/a3_worklog.py
+python scripts/a4_version.py
+
+# 3. 산출물 B DB 생성
+python scripts/b7_load_sqlite.py
+
+# 4. 산출물 B 핵심 조회
+sqlite3 -header -column output/horang_pm.db < sql/b7_version_md.sql
+
+# 5. 산출물 C 확인
+python -m http.server 8000
+# http://localhost:8000/docs/C_dashboard.html
+```
+
+특정 기간 동시 담당 Issue 조회는 위 B 섹션의 SQLite parameter 예시를 사용합니다.
+
+산출물 A/B의 판단 근거는 각 Markdown 문서에, C의 동작과 데이터 계약은 C 설명 문서에, 운영/AI 정책은 D 문서에 정리되어 있습니다.

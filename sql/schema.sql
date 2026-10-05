@@ -223,7 +223,7 @@ CREATE VIEW vw_version_category_size_md AS
 SELECT
     iv.version_name,
     i.category_type,
-    i.size_class,
+    COALESCE(i.size_class, 'UNCLASSIFIED') AS size_class,
     p.process,
 
     ROUND(
@@ -240,11 +240,24 @@ JOIN issue_version iv
     ON iv.issue_key = i.issue_key
    AND iv.include_in_md = 1
 
+JOIN version v
+    ON v.version_name = iv.version_name
+
 LEFT JOIN person p
     ON p.person_key = w.author_person_key
+
+WHERE
+    date(w.started_at) <= date(
+        CASE
+            WHEN v.jira_closed_at IS NOT NULL
+             AND date(v.jira_closed_at) <= date('2026-01-26')
+            THEN v.jira_closed_at
+            ELSE '2026-01-26'
+        END
+    )
 
 GROUP BY
     iv.version_name,
     i.category_type,
-    i.size_class,
+    COALESCE(i.size_class, 'UNCLASSIFIED'),
     p.process;
