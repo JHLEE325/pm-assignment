@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>업데이트 일정 역산 상황판 (C 산출물)</title>
+<style>
+  :root{
+    --bg:#f6f7f9;--card:#fff;--border:#d8dee4;--text:#1f2328;--muted:#656d76;
+    --blue:#0969da;--green:#1a7f37;--yellow:#9a6700;--red:#cf222e;--soft:#f6f8fa;
+  }
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,'Malgun Gothic',sans-serif;margin:0;background:var(--bg);color:var(--text)}
+  main{max-width:1180px;margin:0 auto;padding:24px}
+  h1{font-size:22px;margin:0 0 6px} h2{font-size:16px;margin:0 0 12px} h3{font-size:14px;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  input,select{width:100%;padding:9px 10px;border:1px solid #afb8c1;border-radius:6px;background:#fff;color:var(--text)}
+  button{padding:10px 18px;background:var(--blue);color:#fff;border:0;border-radius:6px;cursor:pointer;font-weight:600}
+  .actions{display:flex;align-items:end;justify-content:flex-end}
+  table{width:100%;border-collapse:collapse;font-size:13px} th,td{border-bottom:1px solid #eaeef2;padding:9px 8px;text-align:left;vertical-align:top}
+  th{background:#f6f8fa;font-weight:600}.num{text-align:right;font-variant-numeric:tabular-nums}
+  .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700}
+  .ok{color:var(--green);background:#dafbe1}.warn{color:var(--yellow);background:#fff8c5}.danger{color:var(--red);background:#ffebe9}
+  .summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.metric{background:var(--soft);border-radius:8px;padding:12px}
+  .metric .label{font-size:11px;color:var(--muted)}.metric .value{font-size:18px;font-weight:700;margin-top:4px}.metric .detail{font-size:11px;color:var(--muted);margin-top:4px}
+  .note{background:#ddf4ff;border:1px solid #54aeff;padding:11px 12px;font-size:12px;border-radius:7px;margin-bottom:16px;line-height:1.55}
+  .assumption{background:#fff8c5;border:1px solid #d4a72c;padding:10px 12px;font-size:12px;border-radius:7px;line-height:1.55}
+  .evidence{font-size:13px;line-height:1.65}.evidence code{background:#f6f8fa;padding:2px 5px;border-radius:4px}
+  .alt-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.alt{border:1px solid var(--border);border-radius:8px;padding:12px}.alt strong{display:block;margin-bottom:6px}.alt p{font-size:12px;line-height:1.55;margin:0;color:#3d444d}
+  .hidden{display:none}.muted{color:var(--muted)}
+  details{margin-top:10px} summary{cursor:pointer;font-size:12px;color:var(--blue)}
+  @media(max-width:800px){.grid,.grid.two,.summary,.alt-list{grid-template-columns:1fr}.actions{justify-content:stretch}.actions button{width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <h1>업데이트 일정 역산 상황판</h1>
+  <div class="sub">산출물 C 목업 · 정적 샘플 데이터 · 기준일 2026-01-26</div>
+
+  <div class="note">
+    실제 DB 연결 대신 과제 제공 데이터와 A/B에서 정한 규칙을 정적 payload로 넣은 목업입니다.
+    운영 환경에서는 B-8의 <b>최신 승인 baseline</b>과 B-6 테이블을 조회한 API 응답으로 이 payload를 교체합니다.
+    계산은 모두 결정론적 규칙으로 수행하며 AI 호출은 사용하지 않습니다.
+  </div>
+
+  <section class="card">
+    <h2>입력</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="releaseDate">업데이트일</label>
+        <input type="date" id="releaseDate" value="2026-03-12">
+      </div>
+      <div class="field">
+        <label for="content">콘텐츠</label>
+        <select id="content">
+          <option value="CLS">신규 클래스 추가 (SYSTEM / L)</option>
+          <option value="EV11">봄 시즌 콘텐츠 (CONTENT / L)</option>
+          <option value="FRD">친구 시스템 개편 (SYSTEM / M)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="owner">담당 기획자</label>
+        <select id="owner">
+          <option value="pd_lee">pd_lee</option>
+          <option value="pd_park">pd_park</option>
+          <option value="pd_choi">pd_choi</option>
+          <option value="pd_kim">pd_kim</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px;text-align:right"><button onclick="calc()">역산</button></div>
+  </section>
+
+  <section class="card">
+    <h2>핵심 결과</h2>
+    <div id="summary" class="summary"></div>
+  </section>
+
+  <section class="card">
+    <h2>역산 일정</h2>
+    <table>
+      <thead><tr><th>단계</th><th>기간</th><th class="num">소요</th><th>계산 근거</th></tr></thead>
+      <tbody id="timeline"><tr><td colspan="4">역산 버튼을 눌러주세요.</td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>계산 근거</h2>
+    <div id="evidence" class="evidence"></div>
+  </section>
+
+  <section class="card" id="alternativesCard">
+    <h2>일정 초과 시 선택 가능한 대안</h2>
+    <div id="alternatives" class="alt-list"></div>
+  </section>
+
+<script>
+/* =====================================================================
+   FIXED 1
+   기존에는 MD 기준이 계산 로직 안에 직접 하드코딩되어 실적 → baseline 갱신 경로가 없었다.
+   목업에서는 '서버에서 받은 데이터'를 흉내 내는 MOCK_DATA로 분리했다.
+   실제 운영에서는 B-8에서 승인된 최신 baseline을 API 응답으로 받아 같은 계산 함수에 주입한다.
+   ===================================================================== */
+const CONFIG = {
+  asOf: "2026-01-26",                  // FIXED 8의 주입 가능한 기준일
+  planningBufferRate: 0.25,
+  baselineRevision: "mock-v0 + A-2 review rule"
+};
+
+const CONTENTS = {
+  CLS:  {name:"신규 클래스 추가", category:"SYSTEM",  size:"L", issueKey:"HRG-1071"},
+  EV11: {name:"봄 시즌 콘텐츠",   category:"CONTENT", size:"L", issueKey:"HRG-1072"},
+  FRD:  {name:"친구 시스템 개편", category:"SYSTEM",  size:"M", issueKey:"HRG-1073"}
+};
+
+const BASELINE = {
+  "SYSTEM:S":  {planMd:3,  devMd:5,  artMd:2,  qaMd:1, artLeadDays:3},
+  "SYSTEM:M":  {planMd:7,  devMd:12, artMd:5,  qaMd:3, artLeadDays:5},
+  "SYSTEM:L":  {planMd:15, devMd:30, artMd:12, qaMd:6, artLeadDays:10},
+  "CONTENT:S": {planMd:2,  devMd:3,  artMd:4,  qaMd:1, artLeadDays:5},
+  "CONTENT:M": {planMd:5,  devMd:8,  artMd:10, qaMd:2, artLeadDays:8},
+  "CONTENT:L": {planMd:10, devMd:18, artMd:25, qaMd:4, artLeadDays:15}
+};
+
+// A-2에서 실제 Jira 일정으로 다시 정의한 검수/인계 기간.
+const REVIEW_DAYS = {S:3, M:4, L:6};
+
+/* =====================================================================
+   FIXED 2
+   기존에는 PLAN/DEV만 있어 리소스와 QA 단계가 사라졌다.
+   baseline payload에 plan/dev/art/qa MD와 artLeadDays를 모두 포함하고,
+   아래 역산 체인에서 ART와 QA/코드프리즈를 실제 단계로 계산한다.
+   ===================================================================== */
+const PEOPLE = {
+  pd_lee:{role:"planner", availability:0.8}, pd_park:{role:"planner", availability:0.8},
+  pd_choi:{role:"planner", availability:1.0}, pd_kim:{role:"planner", availability:0.6},
+  dev_jung:{role:"server", availability:0.9}, dev_oh:{role:"server", availability:1.0},
+  dev_nam:{role:"server", availability:0.8}, dev_han:{role:"client", availability:0.9},
+  dev_seo:{role:"client", availability:0.7}, dev_ryu:{role:"client", availability:1.0},
+  art_yoon:{role:"art", availability:1.0}, art_shin:{role:"art", availability:0.9}
+};
+
+const DEV_TEAM = ["dev_jung","dev_oh","dev_nam","dev_han","dev_seo","dev_ryu"];
+const ART_TEAM = ["art_yoon","art_shin"]; // availability가 없는 외주 계정은 자동 capacity 계산에서 제외
+
+const HOLIDAYS = new Set([
+  "2024-09-16","2024-09-17","2024-09-18","2024-10-03","2024-10-09","2024-12-25",
+  "2025-01-01","2025-01-28","2025-01-29","2025-01-30","2025-03-03","2025-05-05","2025-05-06",
+  "2025-06-06","2025-08-15","2025-10-03","2025-10-06","2025-10-07","2025-10-08","2025-10-09","2025-12-25",
+  "2026-01-01","2026-02-16","2026-02-17","2026-02-18","2026-03-02","2026-05-05"
+]);
+
+const PTO = {
+  art_shin:["2025-01-15","2025-05-27","2025-06-05","2025-09-16","2025-09-19","2026-01-19"],
+  art_yoon:["2025-03-26","2025-05-30","2025-09-19","2025-10-24","2025-12-15","2025-12-16"],
+  dev_han:["2025-03-20","2025-04-10","2025-06-06","2025-07-18","2025-08-07","2025-09-09"],
+  dev_jung:["2025-02-28","2025-06-25","2025-07-15","2025-08-20","2025-09-12","2025-11-10","2025-11-11"],
+  dev_nam:["2025-02-17","2025-06-12","2025-06-17","2025-06-18","2025-07-22","2025-09-19","2025-10-16"],
+  dev_oh:["2025-01-01","2025-01-23","2025-03-04","2025-03-31","2025-10-27","2025-12-02","2026-01-14"],
+  dev_ryu:["2025-03-03","2025-03-26","2025-06-11","2025-06-27","2025-07-07","2025-10-15","2025-12-03","2025-12-31"],
+  dev_seo:["2025-01-22","2025-03-26","2025-05-23","2025-08-12","2025-09-26","2025-10-29","2025-11-04","2025-11-07","2025-12-22","2025-12-23","2026-01-08"],
+  pd_choi:["2025-03-05","2025-04-15","2025-06-17","2025-11-27","2026-01-21"],
+  pd_kim:["2025-03-06","2025-05-14","2025-05-16","2025-06-17","2025-10-06","2025-11-17","2026-01-06","2026-03-20"],
+  pd_lee:["2025-01-08","2025-02-07","2025-02-11","2025-04-29"],
+  pd_park:["2025-01-31","2025-07-31","2025-09-23","2025-09-25","2025-12-01"]
+};
+Object.keys(PTO).forEach(k => PTO[k] = new Set(PTO[k]));
+
+/* =====================================================================
+   FIXED 3
+   담당 기획자의 availability, PTO, 기준일 현재 동시 담당 이슈를 실제 계산에 사용한다.
+   동시 담당의 세부 투입률 데이터가 없으므로 목업에서는
+   '가용률을 현재 대상 포함 동시 담당 건수에 균등 분배'하는 기계적 가정을 쓴다.
+   실운영에서는 B-7의 담당 구간 데이터/업무 배분 정책으로 교체한다.
+   ===================================================================== */
+const ACTIVE_ASSIGNMENTS = {
+  pd_lee:[
+    {issueKey:"HRG-1071", start:"2026-01-20", end:null},
+    {issueKey:"HRG-1386", start:"2025-12-24", end:null}
+  ],
+  pd_park:[],
+  pd_choi:[{issueKey:"HRG-1389", start:"2026-01-13", end:null}],
+  pd_kim:[]
+};
+
+/* =====================================================================
+   FIXED 8
+   new Date()를 '오늘' 의미로 사용하지 않는다.
+   과제 기준일은 CONFIG.asOf로 주입되며, 서버 응답의 as_of 값으로 교체 가능하다.
+   ===================================================================== */
+function parseDate(s){ const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
+function cloneDate(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+function fmt(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+function addCalendarDays(d,n){ const r=cloneDate(d); r.setDate(r.getDate()+n); return r; }
+function isWeekend(d){ return d.getDay()===0 || d.getDay()===6; }
+function isHoliday(d){ return HOLIDAYS.has(fmt(d)); }
+function isPto(person,d){ return !!person && PTO[person]?.has(fmt(d)); }
+
+/* =====================================================================
+   FIXED 4
+   단순 캘린더데이 뺄셈을 제거했다.
+   모든 단계는 주말/공휴일을 건너뛰며, 개인·팀 작업 단계는 PTO까지 일별 capacity에 반영한다.
+   ===================================================================== */
+function isBusinessDay(d){ return !isWeekend(d) && !isHoliday(d); }
+function previousBusinessDay(d){ let r=addCalendarDays(d,-1); while(!isBusinessDay(r)) r=addCalendarDays(r,-1); return r; }
+function previousCapacityDay(d, capacityFn){ let r=addCalendarDays(d,-1); while(capacityFn(r)<=0) r=addCalendarDays(r,-1); return r; }
+function normalizeCapacityEnd(d, capacityFn){ let r=cloneDate(d); while(capacityFn(r)<=0) r=addCalendarDays(r,-1); return r; }
+
+function fixedBusinessStage(endDate, days){
+  let end=cloneDate(endDate); while(!isBusinessDay(end)) end=addCalendarDays(end,-1);
+  let start=cloneDate(end), count=1;
+  while(count<days){ start=addCalendarDays(start,-1); if(isBusinessDay(start)) count++; }
+  return {start,end,workDays:days};
+}
+
+function capacityStage(endDate, requiredMd, capacityFn){
+  const end=normalizeCapacityEnd(endDate,capacityFn);
+  let cur=cloneDate(end), remain=requiredMd, workDays=0;
+  while(remain>1e-9){
+    const cap=capacityFn(cur);
+    if(cap>0){ remain-=cap; workDays++; }
+    if(remain>1e-9) cur=addCalendarDays(cur,-1);
+  }
+  return {start:cur,end,workDays};
+}
+
+function subtractCapacityDays(startDate, days, capacityFn){
+  let cur=cloneDate(startDate), count=0;
+  while(count<days){ cur=addCalendarDays(cur,-1); if(capacityFn(cur)>0) count++; }
+  return cur;
+}
+
+function teamCapacity(date,members){
+  if(!isBusinessDay(date)) return 0;
+  return members.reduce((sum,p) => sum + (isPto(p,date) ? 0 : PEOPLE[p].availability),0);
+}
+
+function concurrentIssues(owner, selectedIssueKey){
+  const asOf=parseDate(CONFIG.asOf);
+  return (ACTIVE_ASSIGNMENTS[owner]||[]).filter(x => {
+    if(x.issueKey===selectedIssueKey) return false;
+    const start=parseDate(x.start), end=x.end?parseDate(x.end):null;
+    return start<=asOf && (!end || end>=asOf);
+  });
+}
+
+function plannerCapacityFn(owner, selectedIssueKey, extraPlannerFte=0){
+  const existing=concurrentIssues(owner,selectedIssueKey).length;
+  const base=PEOPLE[owner].availability;
+  const ownShare=base/(existing+1); // 현재 대상까지 포함해 균등 분배
+  return {
+    existing,
+    ownShare,
+    fn:(date) => {
+      if(!isBusinessDay(date)) return 0;
+      const ownerCap=isPto(owner,date)?0:ownShare;
+      return ownerCap + extraPlannerFte; // TF 추가 인력은 1.0 FTE, 별도 PTO 없음이라는 목업 가정
+    }
+  };
+}
+
+/* =====================================================================
+   FIXED 5
+   누락됐던 전체 역산 체인을 구현했다.
+   업데이트 ← QA/코드프리즈 ← 개발 ← 리소스 선행 ← 리소스 제작 ← 검수/인계 ← 기획.
+   QA 인력 데이터가 없으므로 QA baseline MD를 1 MD=1 영업일의 기간 proxy로 사용한다.
+   artLeadDays는 별도 재산정 데이터가 없어 목업에서 v0 값을 임시 정책값으로 사용한다.
+   ===================================================================== */
+function buildSchedule(content, owner, releaseDate, extraPlannerFte=0){
+  const b=BASELINE[`${content.category}:${content.size}`];
+  const planner=plannerCapacityFn(owner,content.issueKey,extraPlannerFte);
+
+  const qaEnd=previousBusinessDay(releaseDate);
+  const qa=fixedBusinessStage(qaEnd,Math.max(1,Math.ceil(b.qaMd)));
+
+  const devEnd=previousBusinessDay(qa.start);
+  const dev=capacityStage(devEnd,b.devMd,d => teamCapacity(d,DEV_TEAM));
+
+  const leadEnd=previousBusinessDay(dev.start);
+  const artLead=fixedBusinessStage(leadEnd,b.artLeadDays);
+
+  const artEnd=previousBusinessDay(artLead.start);
+  const art=capacityStage(artEnd,b.artMd,d => teamCapacity(d,ART_TEAM));
+
+  const reviewEnd=previousBusinessDay(art.start);
+  const review=fixedBusinessStage(reviewEnd,REVIEW_DAYS[content.size]);
+
+  const planEnd=previousCapacityDay(review.start,planner.fn);
+  const productivePlan=capacityStage(planEnd,b.planMd,planner.fn);
+  const bufferDays=Math.ceil(productivePlan.workDays*CONFIG.planningBufferRate);
+  const planStart=subtractCapacityDays(productivePlan.start,bufferDays,planner.fn);
+  const plan={start:planStart,end:productivePlan.end,workDays:productivePlan.workDays+bufferDays,
+              productiveDays:productivePlan.workDays,bufferDays};
+
+  return {baseline:b, planner, plan, review, art, artLead, dev, qa, release:{start:releaseDate,end:releaseDate,workDays:0}};
+}
+
+function signedBusinessDays(from,to){
+  if(fmt(from)===fmt(to)) return 0;
+  const forward=to>from, start=forward?cloneDate(from):cloneDate(to), end=forward?cloneDate(to):cloneDate(from);
+  let cur=cloneDate(start), count=0;
+  while(cur<end){ cur=addCalendarDays(cur,1); if(isBusinessDay(cur)) count++; }
+  return forward?count:-count;
+}
+
+function countExcluded(start,end,owner){
+  let cur=cloneDate(start), weekends=0, holidays=[], ownerPto=[];
+  while(cur<=end){
+    if(isWeekend(cur)) weekends++;
+    else if(isHoliday(cur)) holidays.push(fmt(cur));
+    else if(isPto(owner,cur)) ownerPto.push(fmt(cur));
+    cur=addCalendarDays(cur,1);
+  }
+  return {weekends,holidays,ownerPto};
+}
+
+/* =====================================================================
+   FIXED 6
+   여유/지연 2단계만 표시하지 않는다.
+   - 초과: 기획 착수 필요일이 기준일보다 과거
+   - 주의: 착수일은 미래지만 남은 여유가 해당 Size의 검수일보다 짧음
+   - 여유: 그 이상
+   초과 시 담당자 재배정, 범위 축소, 업데이트 연기, TF 가능성을 숫자로 계산해 제시한다.
+   ===================================================================== */
+function riskOf(schedule,content){
+  const slack=signedBusinessDays(parseDate(CONFIG.asOf),schedule.plan.start);
+  if(slack<0) return {level:"danger",label:"일정 초과",slack};
+  if(slack<REVIEW_DAYS[content.size]) return {level:"warn",label:"주의",slack};
+  return {level:"ok",label:"여유",slack};
+}
+
+function bestOwnerAlternative(content,currentOwner,release,currentSchedule){
+  let best=null;
+  Object.keys(PEOPLE).filter(p=>PEOPLE[p].role==="planner" && p!==currentOwner).forEach(owner=>{
+    const s=buildSchedule(content,owner,release);
+    const gain=signedBusinessDays(currentSchedule.plan.start,s.plan.start);
+    if(!best || s.plan.start>best.schedule.plan.start) best={owner,schedule:s,gain};
+  });
+  return best;
+}
+
+function scopeAlternative(content,owner,release,currentSchedule){
+  const sizes=["S","M","L"], idx=sizes.indexOf(content.size);
+  if(idx<=0) return null;
+  let fallback=null;
+  for(let i=idx-1;i>=0;i--){
+    const smaller={...content,size:sizes[i]};
+    const s=buildSchedule(smaller,owner,release);
+    const gain=signedBusinessDays(currentSchedule.plan.start,s.plan.start);
+    const candidate={size:sizes[i],schedule:s,gain,solves:riskOf(s,smaller).slack>=0};
+    if(!fallback) fallback=candidate;
+    if(candidate.solves) return candidate;
+  }
+  return fallback;
+}
+
+function releaseDelayAlternative(content,owner,release){
+  for(let days=1;days<=365;days++){
+    const next=addCalendarDays(release,days), s=buildSchedule(content,owner,next);
+    if(riskOf(s,content).slack>=0) return {days,release:next,schedule:s};
+  }
+  return null;
+}
+
+function tfAlternative(content,owner,release){
+  for(let people=1;people<=4;people++){
+    const s=buildSchedule(content,owner,release,people);
+    if(riskOf(s,content).slack>=0) return {people,schedule:s};
+  }
+  return null;
+}
+
+/* =====================================================================
+   FIXED 7
+   결과 날짜만 노출하지 않고 baseline, availability, 동시 담당, buffer, 휴일/PTO,
+   팀 capacity와 각 단계의 산식을 화면에 같이 보여준다. 사용자가 결과를 검증할 수 있다.
+   ===================================================================== */
+function renderSummary(content,owner,schedule,risk){
+  const existing=schedule.planner.existing;
+  document.getElementById("summary").innerHTML=`
+    <div class="metric"><div class="label">기획 착수 필요일</div><div class="value">${fmt(schedule.plan.start)}</div><div class="detail">기준일 ${CONFIG.asOf}</div></div>
+    <div class="metric"><div class="label">판정</div><div class="value"><span class="badge ${risk.level}">${risk.label}</span></div><div class="detail">여유 ${risk.slack} 영업일</div></div>
+    <div class="metric"><div class="label">기획자 실효 가용률</div><div class="value">${(schedule.planner.ownShare*100).toFixed(0)}%</div><div class="detail">기본 ${(PEOPLE[owner].availability*100).toFixed(0)}% / 기존 동시 ${existing}건</div></div>
+    <div class="metric"><div class="label">기준표</div><div class="value">${content.category} / ${content.size}</div><div class="detail">${CONFIG.baselineRevision}</div></div>`;
+}
+
+function rangeText(stage){ return fmt(stage.start)===fmt(stage.end)?fmt(stage.start):`${fmt(stage.start)} ~ ${fmt(stage.end)}`; }
+function renderTimeline(content,owner,s){
+  const b=s.baseline;
+  const rows=[
+    ["기획",rangeText(s.plan),`${s.plan.workDays}영업일`,`${b.planMd}MD / 실효가용률 ${(s.planner.ownShare*100).toFixed(0)}% + 25% buffer(${s.plan.bufferDays}일)`],
+    ["검수/인계",rangeText(s.review),`${s.review.workDays}영업일`,`A-2 ${content.size} 기준 ${REVIEW_DAYS[content.size]}영업일`],
+    ["리소스 제작",rangeText(s.art),`${s.art.workDays}작업일`,`${b.artMd}MD / 내부 ART 일별 capacity(PTO 반영)`],
+    ["리소스 선행",rangeText(s.artLead),`${s.artLead.workDays}영업일`,`개발 전 ${b.artLeadDays}영업일 선행`],
+    ["개발",rangeText(s.dev),`${s.dev.workDays}작업일`,`${b.devMd}MD / DEV 팀 일별 capacity(PTO 반영)`],
+    ["QA/코드프리즈",rangeText(s.qa),`${s.qa.workDays}영업일`,`${b.qaMd}MD를 기간 proxy로 사용`],
+    ["업데이트",fmt(s.release.start),"-","입력한 업데이트일"]
+  ];
+  document.getElementById("timeline").innerHTML=rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+}
+
+function renderEvidence(content,owner,s){
+  const concurrent=concurrentIssues(owner,content.issueKey);
+  const excluded=countExcluded(s.plan.start,s.release.start,owner);
+  const devBase=DEV_TEAM.reduce((a,p)=>a+PEOPLE[p].availability,0);
+  const artBase=ART_TEAM.reduce((a,p)=>a+PEOPLE[p].availability,0);
+  document.getElementById("evidence").innerHTML=`
+    <div class="grid two">
+      <div>
+        <h3>기준 및 담당자</h3>
+        <div>Baseline: <code>${content.category}/${content.size}</code> → PLAN ${s.baseline.planMd} / DEV ${s.baseline.devMd} / ART ${s.baseline.artMd} / QA ${s.baseline.qaMd} MD</div>
+        <div>담당자 기본 가용률: <code>${(PEOPLE[owner].availability*100).toFixed(0)}%</code></div>
+        <div>기준일 기존 동시 담당: <code>${concurrent.length}건</code> ${concurrent.length?`(${concurrent.map(x=>x.issueKey).join(", ")})`:""}</div>
+        <div>실효 가용률: <code>${(PEOPLE[owner].availability*100).toFixed(0)}% ÷ (${concurrent.length}+1) = ${(s.planner.ownShare*100).toFixed(0)}%</code></div>
+        <div>기획 productive ${s.plan.productiveDays}일 + 25% buffer ${s.plan.bufferDays}일</div>
+      </div>
+      <div>
+        <h3>캘린더 및 팀 capacity</h3>
+        <div>주말 제외: <code>${excluded.weekends}일</code></div>
+        <div>공휴일 제외: <code>${excluded.holidays.length}일</code> ${excluded.holidays.length?`(${excluded.holidays.join(", ")})`:""}</div>
+        <div>${owner} 연차 제외: <code>${excluded.ownerPto.length}일</code> ${excluded.ownerPto.length?`(${excluded.ownerPto.join(", ")})`:""}</div>
+        <div>DEV 기본 capacity: <code>${devBase.toFixed(1)} MD/일</code>, ART 내부 capacity: <code>${artBase.toFixed(1)} MD/일</code></div>
+        <div class="muted">DEV/ART 구성원의 개별 PTO는 해당 날짜의 팀 capacity에서 차감한다.</div>
+      </div>
+    </div>
+    <details><summary>목업 계산 가정 보기</summary><div class="assumption" style="margin-top:8px">
+      동시 담당 이슈별 실제 배분율은 제공되지 않아 기획자 availability를 현재 대상 포함 담당 건수에 균등 분배한다.
+      QA 인력 정보가 없어 QA MD를 기간 proxy로 쓴다. 외주 ART는 availability가 없어 자동 capacity에서 제외한다.
+      리소스 선행일은 재산정 데이터가 없어 v0의 art_lead_days를 목업 정책값으로 사용한다.
+    </div></details>`;
+}
+
+function renderAlternatives(content,owner,release,schedule,risk){
+  const wrap=document.getElementById("alternatives");
+  if(risk.slack>=0){
+    wrap.innerHTML=`<div class="alt"><strong>현재 일정은 역산 기준을 충족합니다.</strong><p>대안 제시는 일정 초과 시에만 활성화합니다.</p></div>`;
+    return;
+  }
+
+  const cards=[];
+  const ownerAlt=bestOwnerAlternative(content,owner,release,schedule);
+  if(ownerAlt){
+    const r=riskOf(ownerAlt.schedule,content);
+    cards.push(`<div class="alt"><strong>대안 1 · 담당자 재배정</strong><p><b>${ownerAlt.owner}</b>로 변경하면 기획 착수일이 <b>${fmt(ownerAlt.schedule.plan.start)}</b>로 ${ownerAlt.gain}영업일 늦춰집니다. ${r.slack>=0?"현재 업데이트일 유지 가능":"여전히 "+Math.abs(r.slack)+"영업일 부족"}.</p></div>`);
+  }
+
+  const scope=scopeAlternative(content,owner,release,schedule);
+  if(scope){
+    const sr=riskOf(scope.schedule,{...content,size:scope.size});
+    cards.push(`<div class="alt"><strong>대안 2 · 범위 축소</strong><p><b>${content.size} → ${scope.size}</b>로 줄이면 착수 필요일이 <b>${fmt(scope.schedule.plan.start)}</b>로 이동해 ${scope.gain}영업일을 확보합니다. ${sr.slack>=0?"현재 업데이트일 유지 가능":"아직 "+Math.abs(sr.slack)+"영업일 부족"}.</p></div>`);
+  }
+
+  const delay=releaseDelayAlternative(content,owner,release);
+  if(delay){
+    cards.push(`<div class="alt"><strong>대안 ${cards.length+1} · 업데이트 연기</strong><p>범위와 담당자를 유지하면 업데이트를 최소 <b>${delay.days}캘린더일</b> 늦춘 <b>${fmt(delay.release)}</b>에 맞춰야 기획 착수일이 기준일 이후가 됩니다.</p></div>`);
+  }
+
+  const tf=tfAlternative(content,owner,release);
+  if(tf){
+    cards.push(`<div class="alt"><strong>추가 검토 · 기획 TF</strong><p>1.0 FTE 기획자 <b>${tf.people}명</b>을 추가하면 기획 착수 필요일이 <b>${fmt(tf.schedule.plan.start)}</b>까지 늦춰집니다.</p></div>`);
+  }else{
+    cards.push(`<div class="alt"><strong>추가 검토 · 기획 TF만으로는 부족</strong><p>최대 4명의 1.0 FTE 기획자를 추가해도 후속 검수·리소스·개발 마감이 이미 앞에 있어 기준일 이후 착수로 회복되지 않습니다. 범위 또는 업데이트일 조정이 필요합니다.</p></div>`);
+  }
+  wrap.innerHTML=cards.join("");
+}
+
+function calc(){
+  const release=parseDate(document.getElementById("releaseDate").value);
+  const content=CONTENTS[document.getElementById("content").value];
+  const owner=document.getElementById("owner").value;
+  if(!release || !content || !PEOPLE[owner]) return;
+
+  const schedule=buildSchedule(content,owner,release);
+  const risk=riskOf(schedule,content);
+  renderSummary(content,owner,schedule,risk);
+  renderTimeline(content,owner,schedule);
+  renderEvidence(content,owner,schedule);
+  renderAlternatives(content,owner,release,schedule,risk);
+}
+
+calc();
+</script>
+</main>
+</body>
+</html>
